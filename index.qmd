@@ -1,11 +1,7 @@
 ---
-title: "birdie"
+title: "IS415-GAA"
 ---
 
-This is a Quarto website.
+Welcome to <b> IS415 Geospatial Analytics and Applications </b>
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```
+This is the course website of IS415. I am studying this term and I want to die.
