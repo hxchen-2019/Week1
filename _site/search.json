@@ -18,6 +18,13 @@
     "href": "lessons/In-class/in-class_ex2/In-class_Ex02.html",
     "title": "In Class Excercise 2",
     "section": "",
-    "text": "pacman::p_load(sf, tidyverse)\n\n\n\n\n\n\n\n\n\n\nprint(\"My Life is dead\")\n\nMy Life is dead"
+    "text": "pacman::p_load(sf, tidyverse)"
+  },
+  {
+    "objectID": "lessons/Hands-on/Hands-on-Ex2/Hands-on-Ex2.html",
+    "href": "lessons/Hands-on/Hands-on-Ex2/Hands-on-Ex2.html",
+    "title": "Hands-on-2",
+    "section": "",
+    "text": "pacman::p_load(sf, tidyverse)\n\n\nmpsz = st_read(dsn = \"data/geospatial\", \n                  layer = \"MP14_SUBZONE_WEB_PL\")\n\nReading layer `MP14_SUBZONE_WEB_PL' from data source \n  `C:\\hxchen-2019\\birdie\\lessons\\Hands-on\\Hands-on-Ex2\\data\\geospatial' \n  using driver `ESRI Shapefile'\nSimple feature collection with 323 features and 15 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 2667.538 ymin: 15748.72 xmax: 56396.44 ymax: 50256.33\nProjected CRS: SVY21\n\n\n\ncyclingpath = st_read(dsn = \"data/geospatial\", \n                         layer = \"CyclingPathGazette\")\n\nReading layer `CyclingPathGazette' from data source \n  `C:\\hxchen-2019\\birdie\\lessons\\Hands-on\\Hands-on-Ex2\\data\\geospatial' \n  using driver `ESRI Shapefile'\nSimple feature collection with 2248 features and 2 fields\nGeometry type: MULTILINESTRING\nDimension:     XY\nBounding box:  xmin: 11854.32 ymin: 28347.98 xmax: 42626.09 ymax: 48948.15\nProjected CRS: SVY21"
   }
 ]
