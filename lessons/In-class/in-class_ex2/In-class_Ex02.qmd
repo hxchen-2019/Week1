@@ -1,3 +1,15 @@
 ---
-title: "in-class_Ex02"
+title: "In Class Excercise 2"
 ---
+
+```{r}
+pacman::p_load(sf, tidyverse)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```

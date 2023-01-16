@@ -12,5 +12,12 @@
     "title": "IS415-GAA",
     "section": "",
     "text": "Welcome to  IS415 Geospatial Analytics and Applications \nThis is the course website of IS415. I am studying this term and I want to die."
+  },
+  {
+    "objectID": "lessons/In-class/in-class_ex2/In-class_Ex02.html",
+    "href": "lessons/In-class/in-class_ex2/In-class_Ex02.html",
+    "title": "In Class Excercise 2",
+    "section": "",
+    "text": "pacman::p_load(sf, tidyverse)"
   }
 ]
