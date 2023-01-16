@@ -15,7 +15,7 @@ website:
           - text: "In-class Exercise"
             menu: 
             - text: "In-class exercise 2"
-              href: "lessons/in-class/in-class_02Ex02.qmd"
+              href: "lessons/in-class/in-class_Ex02.qmd"
 
 format:
   html:
