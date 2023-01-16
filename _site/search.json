@@ -18,6 +18,6 @@
     "href": "lessons/In-class/in-class_ex2/In-class_Ex02.html",
     "title": "In Class Excercise 2",
     "section": "",
-    "text": "pacman::p_load(sf, tidyverse)"
+    "text": "pacman::p_load(sf, tidyverse)\n\n\n\n\n\n\n\n\n\n\nprint(\"My Life is dead\")\n\nMy Life is dead"
   }
 ]

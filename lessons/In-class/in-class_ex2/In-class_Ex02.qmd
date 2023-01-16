@@ -1,5 +1,13 @@
 ---
 title: "In Class Excercise 2"
+date: '`r Sys.Date()`'
+format: html
+
+execute: 
+  message: false
+  warning: false
+  
+editor: visual
 ---
 
 ```{r}
@@ -12,4 +20,10 @@ pacman::p_load(sf, tidyverse)
 
 ```{r}
 
+```
+
+```{python}
+
+
+print("My Life is dead")
 ```

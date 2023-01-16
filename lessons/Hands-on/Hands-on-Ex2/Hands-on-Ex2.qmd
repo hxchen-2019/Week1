@@ -7,5 +7,19 @@ pacman::p_load(sf, tidyverse)
 ```
 
 ```{r}
+mpsz = st_read(dsn = "/data/geospatial", 
+                  layer = "MP14_SUBZONE_WEB_PL")
+```
+
+```{r}
+cyclingpath = st_read(dsn = "/data/geospatial", 
+                         layer = "CyclingPathGazette")
+```
+
+```{r}
+
+```
+
+```{r}
 
 ```
