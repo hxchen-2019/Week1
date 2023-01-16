@@ -4,5 +4,11 @@
   },
   "about.qmd": {
     "about.html": "73fffa85"
+  },
+  "lessons/Hands-on/hands-on-2.qmd": {
+    "hands-on-2.html": "822a16ca"
+  },
+  "lessons/In-class_Ex02.qmd": {
+    "In-class_Ex02.html": "961dc220"
   }
 }

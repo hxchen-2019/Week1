@@ -5,16 +5,17 @@ website:
   title: "birdie"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-      -text: "Hands on Excercise"
-    menu:
-    - text: "Hands-on excercise 1"
-     href: 
-    menu: 
-    - text: "in-class excercise 2"
-      href: lessons
+          - href: index.qmd
+            text: Home
+          - about.qmd
+          - text: "Hands-on exercises"
+            menu: 
+            - text: "Hands-on exercise 1"
+              href: "lessons/Hands-on/hands-on-2.qmd"
+          - text: "In-class Exercise"
+            menu: 
+            - text: "In-class exercise 2"
+              href: "lessons/in-class/lesson2_Ex02.qmd"
 
 format:
   html:
