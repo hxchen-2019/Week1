@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "birdie"
+  title: "IS415-GAA"
   navbar:
     left:
           - href: index.qmd
@@ -11,11 +11,11 @@ website:
           - text: "Hands-on exercises"
             menu: 
             - text: "Hands-on exercise 1"
-              href: "lessons/Hands-on/hands-on-2.qmd"
+              href: "lessons/Hands-on/Hands-on-Ex2/Hands-on-Ex2.qmd"
           - text: "In-class Exercise"
             menu: 
             - text: "In-class exercise 2"
-              href: "lessons/in-class/In-class_Ex02.qmd"
+              href: "lessons/In-class/in-class_ex2/In-class_Ex02.qmd"
 
 format:
   html:
