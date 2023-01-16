@@ -10,18 +10,47 @@ execute:
 editor: visual
 ---
 
+## Importing Packages
+
+::: callout-note
+Installing all the different packages
+:::
+
 ```{r}
-pacman::p_load(sf, tidyverse)
+#| code-fold: true
+#| code-summary: "Show the Code"
+pacman::p_load(sf, tidyverse, funModeling)
+```
+
+### Importing Geospatial
+
+::: callout-note
+We want to import the RGA data file
+:::
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the Code"
+geoNGA <- st_read("data/geospatial/", layer = "geoBoundaries-NGA-ADM2") %>%
+  st_transform(crs = 26392)
 ```
 
 ```{r}
-
+#| code-fold: true
+#| code-summary: "Show the Code"
+geoNGA <- st_read("data/geospatial/", layer = "geoBoundaries-NGA-ADM2") %>%
+  st_transform(crs = 26392)
 ```
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the Code"
+geoNGA <- st_read("data/geospatial/", layer = "nga_admbnda_adm2_osgof_20190417") %>%
+  st_transform(crs = 26392)
+```
 
+```{}
 ```
 
 ```{r}
-
 ```
