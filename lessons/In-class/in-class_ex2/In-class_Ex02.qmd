@@ -49,8 +49,5 @@ geoNGA <- st_read("data/geospatial/", layer = "nga_admbnda_adm2_osgof_20190417")
   st_transform(crs = 26392)
 ```
 
-```{}
-```
-
 ```{r}
 ```
