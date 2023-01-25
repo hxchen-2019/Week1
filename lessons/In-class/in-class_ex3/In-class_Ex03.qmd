@@ -1,0 +1,13 @@
+---
+title: "In Class Excercise 3"
+date: '`r Sys.Date()`'
+format: html
+
+execute: 
+  message: false
+  warning: false
+  
+editor: visual
+---
+
+### Importing the package
