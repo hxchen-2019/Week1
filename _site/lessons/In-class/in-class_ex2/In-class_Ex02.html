@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-01-25">
+<meta name="dcterms.date" content="2023-01-16">
 
 <title>IS415-GAA-HX - In Class Excercise 2</title>
 <style>
@@ -196,20 +196,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#importing-packages" id="toc-importing-packages" class="nav-link active" data-scroll-target="#importing-packages">Importing Packages</a>
+  <li><a href="#importing-packages" id="toc-importing-packages" class="nav-link active" data-scroll-target="#importing-packages"><span class="toc-section-number">1</span>  Importing Packages</a>
   <ul class="collapse">
-  <li><a href="#importing-geospatial" id="toc-importing-geospatial" class="nav-link" data-scroll-target="#importing-geospatial">Importing Geospatial</a></li>
-  <li><a href="#reading-the-water-point-data" id="toc-reading-the-water-point-data" class="nav-link" data-scroll-target="#reading-the-water-point-data">Reading the water point data</a></li>
+  <li><a href="#importing-geospatial" id="toc-importing-geospatial" class="nav-link" data-scroll-target="#importing-geospatial"><span class="toc-section-number">1.1</span>  Importing Geospatial</a></li>
+  <li><a href="#reading-the-water-point-data" id="toc-reading-the-water-point-data" class="nav-link" data-scroll-target="#reading-the-water-point-data"><span class="toc-section-number">1.2</span>  Reading the water point data</a></li>
   </ul></li>
-  <li><a href="#geospatial-data-cleaning" id="toc-geospatial-data-cleaning" class="nav-link" data-scroll-target="#geospatial-data-cleaning">Geospatial Data Cleaning</a>
+  <li><a href="#geospatial-data-cleaning" id="toc-geospatial-data-cleaning" class="nav-link" data-scroll-target="#geospatial-data-cleaning"><span class="toc-section-number">2</span>  Geospatial Data Cleaning</a>
   <ul class="collapse">
-  <li><a href="#excluding-the-redundent-fields" id="toc-excluding-the-redundent-fields" class="nav-link" data-scroll-target="#excluding-the-redundent-fields">Excluding the redundent fields</a></li>
-  <li><a href="#check-for-duplicate-name" id="toc-check-for-duplicate-name" class="nav-link" data-scroll-target="#check-for-duplicate-name">Check for duplicate name</a></li>
+  <li><a href="#excluding-the-redundent-fields" id="toc-excluding-the-redundent-fields" class="nav-link" data-scroll-target="#excluding-the-redundent-fields"><span class="toc-section-number">2.1</span>  Excluding the redundent fields</a></li>
+  <li><a href="#check-for-duplicate-name" id="toc-check-for-duplicate-name" class="nav-link" data-scroll-target="#check-for-duplicate-name"><span class="toc-section-number">2.2</span>  Check for duplicate name</a></li>
   </ul></li>
-  <li><a href="#data-wrangling-for-water-data-point" id="toc-data-wrangling-for-water-data-point" class="nav-link" data-scroll-target="#data-wrangling-for-water-data-point">Data Wrangling for Water Data Point</a>
+  <li><a href="#data-wrangling-for-water-data-point" id="toc-data-wrangling-for-water-data-point" class="nav-link" data-scroll-target="#data-wrangling-for-water-data-point"><span class="toc-section-number">3</span>  Data Wrangling for Water Data Point</a>
   <ul class="collapse">
-  <li><a href="#extracting-water-point-data" id="toc-extracting-water-point-data" class="nav-link" data-scroll-target="#extracting-water-point-data">Extracting water Point Data</a></li>
-  <li><a href="#saving-the-analytical-data-in-rds-format" id="toc-saving-the-analytical-data-in-rds-format" class="nav-link" data-scroll-target="#saving-the-analytical-data-in-rds-format">Saving the analytical data in RDS format</a></li>
+  <li><a href="#extracting-water-point-data" id="toc-extracting-water-point-data" class="nav-link" data-scroll-target="#extracting-water-point-data"><span class="toc-section-number">3.1</span>  Extracting water Point Data</a></li>
+  <li><a href="#saving-the-analytical-data-in-rds-format" id="toc-saving-the-analytical-data-in-rds-format" class="nav-link" data-scroll-target="#saving-the-analytical-data-in-rds-format"><span class="toc-section-number">3.2</span>  Saving the analytical data in RDS format</a></li>
+  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting"><span class="toc-section-number">3.3</span>  Plotting</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -230,18 +231,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 25, 2023</p>
+      <p class="date">January 16, 2023</p>
     </div>
   </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">January 25, 2023</p>
+    </div>
+  </div>
     
   </div>
   
 
 </header>
 
-<section id="importing-packages" class="level2">
-<h2 class="anchored" data-anchor-id="importing-packages">Importing Packages</h2>
+<section id="importing-packages" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="importing-packages"><span class="header-section-number">1</span> Importing Packages</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -261,8 +268,8 @@ Note
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(sf, tidyverse, funModeling)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="importing-geospatial" class="level3">
-<h3 class="anchored" data-anchor-id="importing-geospatial">Importing Geospatial</h3>
+<section id="importing-geospatial" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="importing-geospatial"><span class="header-section-number">1.1</span> Importing Geospatial</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -324,8 +331,8 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 </section>
-<section id="reading-the-water-point-data" class="level3">
-<h3 class="anchored" data-anchor-id="reading-the-water-point-data">Reading the water point data</h3>
+<section id="reading-the-water-point-data" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="reading-the-water-point-data"><span class="header-section-number">1.2</span> Reading the water point data</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -343,8 +350,8 @@ Note
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>wp_nga <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/aspatial/Wpdx.csv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">#clean_country_name</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Nigeria"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="converting-water-point-data-into-sf-point-features" class="level4">
-<h4 class="anchored" data-anchor-id="converting-water-point-data-into-sf-point-features">Converting water point data into sf point features</h4>
+<section id="converting-water-point-data-into-sf-point-features" class="level4" data-number="1.2.1">
+<h4 data-number="1.2.1" class="anchored" data-anchor-id="converting-water-point-data-into-sf-point-features"><span class="header-section-number">1.2.1</span> Converting water point data into sf point features</h4>
 <p>1) For</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -479,10 +486,10 @@ Projected CRS: Minna / Nigeria Mid Belt
 </section>
 </section>
 </section>
-<section id="geospatial-data-cleaning" class="level2">
-<h2 class="anchored" data-anchor-id="geospatial-data-cleaning">Geospatial Data Cleaning</h2>
-<section id="excluding-the-redundent-fields" class="level3">
-<h3 class="anchored" data-anchor-id="excluding-the-redundent-fields">Excluding the redundent fields</h3>
+<section id="geospatial-data-cleaning" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="geospatial-data-cleaning"><span class="header-section-number">2</span> Geospatial Data Cleaning</h2>
+<section id="excluding-the-redundent-fields" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="excluding-the-redundent-fields"><span class="header-section-number">2.1</span> Excluding the redundent fields</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -501,8 +508,8 @@ Note
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="check-for-duplicate-name" class="level3">
-<h3 class="anchored" data-anchor-id="check-for-duplicate-name">Check for duplicate name</h3>
+<section id="check-for-duplicate-name" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="check-for-duplicate-name"><span class="header-section-number">2.2</span> Check for duplicate name</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -545,8 +552,8 @@ Note
 </div>
 </section>
 </section>
-<section id="data-wrangling-for-water-data-point" class="level2">
-<h2 class="anchored" data-anchor-id="data-wrangling-for-water-data-point">Data Wrangling for Water Data Point</h2>
+<section id="data-wrangling-for-water-data-point" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="data-wrangling-for-water-data-point"><span class="header-section-number">3</span> Data Wrangling for Water Data Point</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freq</span>(<span class="at">data =</span> wp_sf, <span class="at">input =</span> <span class="st">"#status_clean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -584,10 +591,10 @@ Note
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(status_clean) <span class="sc">%&gt;%</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">status_clean =</span> <span class="fu">replace_na</span>(status_clean, <span class="st">"unknown"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="extracting-water-point-data" class="level3">
-<h3 class="anchored" data-anchor-id="extracting-water-point-data">Extracting water Point Data</h3>
-<section id="functional" class="level4">
-<h4 class="anchored" data-anchor-id="functional">Functional</h4>
+<section id="extracting-water-point-data" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="extracting-water-point-data"><span class="header-section-number">3.1</span> Extracting water Point Data</h3>
+<section id="functional" class="level4" data-number="3.1.1">
+<h4 data-number="3.1.1" class="anchored" data-anchor-id="functional"><span class="header-section-number">3.1.1</span> Functional</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>wp_functional <span class="ot">&lt;-</span> wp_sf_nga <span class="sc">%&gt;%</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status_clean <span class="sc">%in%</span></span>
@@ -596,8 +603,8 @@ Note
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Functional but needs repair"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="non-functional" class="level4">
-<h4 class="anchored" data-anchor-id="non-functional">Non Functional</h4>
+<section id="non-functional" class="level4" data-number="3.1.2">
+<h4 data-number="3.1.2" class="anchored" data-anchor-id="non-functional"><span class="header-section-number">3.1.2</span> Non Functional</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>wp_nonfunctional <span class="ot">&lt;-</span> wp_sf_nga <span class="sc">%&gt;%</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status_clean <span class="sc">%in%</span></span>
@@ -608,16 +615,16 @@ Note
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Non functional due to dry season"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="unknown" class="level4">
-<h4 class="anchored" data-anchor-id="unknown">Unknown</h4>
+<section id="unknown" class="level4" data-number="3.1.3">
+<h4 data-number="3.1.3" class="anchored" data-anchor-id="unknown"><span class="header-section-number">3.1.3</span> Unknown</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>wp_unknown <span class="ot">&lt;-</span> wp_sf_nga <span class="sc">%&gt;%</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(status_clean <span class="sc">%in%</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"unknown"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="combining-into-a-single-dataframe" class="level4">
-<h4 class="anchored" data-anchor-id="combining-into-a-single-dataframe">Combining into a single dataframe</h4>
+<section id="combining-into-a-single-dataframe" class="level4" data-number="3.1.4">
+<h4 data-number="3.1.4" class="anchored" data-anchor-id="combining-into-a-single-dataframe"><span class="header-section-number">3.1.4</span> Combining into a single dataframe</h4>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -644,10 +651,25 @@ Note
 </div>
 </section>
 </section>
-<section id="saving-the-analytical-data-in-rds-format" class="level3">
-<h3 class="anchored" data-anchor-id="saving-the-analytical-data-in-rds-format">Saving the analytical data in RDS format</h3>
+<section id="saving-the-analytical-data-in-rds-format" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="saving-the-analytical-data-in-rds-format"><span class="header-section-number">3.2</span> Saving the analytical data in RDS format</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(NGA_wp,<span class="st">"data/rds/NGA_wp.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="plotting"><span class="header-section-number">3.3</span> Plotting</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> NGA_wp, <span class="fu">aes</span>(<span class="at">x=</span> total_wp)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"light blue"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span><span class="fu">mean</span>(total_wp, <span class="at">na.rm=</span>T)), <span class="at">color =</span><span class="st">"red"</span>,<span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">size=</span><span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribution of total water points by LGA"</span>)<span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"No. of water points"</span>) <span class="sc">+</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"No of </span><span class="sc">\n</span><span class="st">LGAs"</span>) <span class="sc">+</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.y=</span><span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="In-class_Ex02_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 
 
