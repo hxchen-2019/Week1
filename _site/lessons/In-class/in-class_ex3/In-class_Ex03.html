@@ -164,6 +164,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../../lessons/Hands-on/Hands-on-Ex3/Hands-on-Ex3.html">
  <span class="dropdown-text">Hands-on exercise 3</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../../lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.html">
+ <span class="dropdown-text">Hands-on exercise 4</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -178,6 +182,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li>
     <a class="dropdown-item" href="../../../lessons/In-class/in-class_ex3/In-class_Ex03.html">
  <span class="dropdown-text">In-class exercise 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../lessons/In-class/in-class_ex4/In-class_Ex04.html">
+ <span class="dropdown-text">In-class exercise 4</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take Home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../../lessons/Take-home/Take-home_ex1/Take-home_ex1.qmd">
+ <span class="dropdown-text">Take Home Exercise 1</span></a>
   </li>  
     </ul>
   </li>
@@ -207,6 +226,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#percentile-map" id="toc-percentile-map" class="nav-link" data-scroll-target="#percentile-map"><span class="toc-section-number">5.1</span>  Percentile Map</a></li>
   <li><a href="#box-plot" id="toc-box-plot" class="nav-link" data-scroll-target="#box-plot"><span class="toc-section-number">5.2</span>  Box Plot</a></li>
+  <li><a href="#box-break-function" id="toc-box-break-function" class="nav-link" data-scroll-target="#box-break-function"><span class="toc-section-number">5.3</span>  Box Break Function</a></li>
+  <li><a href="#create-get-var-function" id="toc-create-get-var-function" class="nav-link" data-scroll-target="#create-get-var-function"><span class="toc-section-number">5.4</span>  Create Get Var Function</a></li>
+  <li><a href="#box-map-function" id="toc-box-map-function" class="nav-link" data-scroll-target="#box-map-function"><span class="toc-section-number">5.5</span>  Box Map Function</a></li>
+  <li><a href="#recode-zero" id="toc-recode-zero" class="nav-link" data-scroll-target="#recode-zero"><span class="toc-section-number">5.6</span>  Recode Zero</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -234,7 +257,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 25, 2023</p>
+      <p class="date-modified">January 30, 2023</p>
     </div>
   </div>
     
@@ -503,6 +526,96 @@ Note
 <div class="cell-output-display">
 <p><img src="In-class_Ex03_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
+</div>
+</section>
+<section id="box-break-function" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="box-break-function"><span class="header-section-number">5.3</span> Box Break Function</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>boxbreaks <span class="ot">&lt;-</span> <span class="cf">function</span>(v,<span class="at">mult=</span><span class="fl">1.5</span>) {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  qv <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">quantile</span>(v))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  iqr <span class="ot">&lt;-</span> qv[<span class="dv">4</span>] <span class="sc">-</span> qv[<span class="dv">2</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  upfence <span class="ot">&lt;-</span> qv[<span class="dv">4</span>] <span class="sc">+</span> mult <span class="sc">*</span> iqr</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  lofence <span class="ot">&lt;-</span> qv[<span class="dv">2</span>] <span class="sc">-</span> mult <span class="sc">*</span> iqr</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># initialize break points vector</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  bb <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode=</span><span class="st">"numeric"</span>,<span class="at">length=</span><span class="dv">7</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># logic for lower and upper fences</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lofence <span class="sc">&lt;</span> qv[<span class="dv">1</span>]) {  <span class="co"># no lower outliers</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">1</span>] <span class="ot">&lt;-</span> lofence</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">floor</span>(qv[<span class="dv">1</span>])</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">2</span>] <span class="ot">&lt;-</span> lofence</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">1</span>] <span class="ot">&lt;-</span> qv[<span class="dv">1</span>]</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (upfence <span class="sc">&gt;</span> qv[<span class="dv">5</span>]) { <span class="co"># no upper outliers</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">7</span>] <span class="ot">&lt;-</span> upfence</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(qv[<span class="dv">5</span>])</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">6</span>] <span class="ot">&lt;-</span> upfence</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    bb[<span class="dv">7</span>] <span class="ot">&lt;-</span> qv[<span class="dv">5</span>]</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  bb[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> qv[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(bb)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-get-var-function" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="create-get-var-function"><span class="header-section-number">5.4</span> Create Get Var Function</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>get.var <span class="ot">&lt;-</span> <span class="cf">function</span>(vname,df) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> df[vname] <span class="sc">%&gt;%</span> <span class="fu">st_set_geometry</span>(<span class="cn">NULL</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">unname</span>(v[,<span class="dv">1</span>])</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(v)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">get.var</span>(<span class="st">"non_functional"</span>, NGA_wp) </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxbreaks</span>(var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -56.5   0.0  14.0  34.0  61.0 131.5 278.0</code></pre>
+</div>
+</div>
+</section>
+<section id="box-map-function" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="box-map-function"><span class="header-section-number">5.5</span> Box Map Function</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>boxmap <span class="ot">&lt;-</span> <span class="cf">function</span>(vnam, df, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">legtitle=</span><span class="cn">NA</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mtitle=</span><span class="st">"Box Map"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mult=</span><span class="fl">1.5</span>){</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">get.var</span>(vnam,df)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  bb <span class="ot">&lt;-</span> <span class="fu">boxbreaks</span>(var)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(df) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(df) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tm_fill</span>(vnam,<span class="at">title=</span>legtitle,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">breaks=</span>bb,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette=</span><span class="st">"Blues"</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"lower outlier"</span>, </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"&lt; 25%"</span>, </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"25% - 50%"</span>, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"50% - 75%"</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"&gt; 75%"</span>, </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"upper outlier"</span>))  <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> mtitle, </span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"top"</span>))</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxmap</span>(<span class="st">"non_functional"</span>, NGA_wp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="In-class_Ex03_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="recode-zero" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="recode-zero"><span class="header-section-number">5.6</span> Recode Zero</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>NGA_wp <span class="ot">&lt;-</span> NGA_wp <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wp_functional =</span> <span class="fu">na_if</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    total_wp, total_wp <span class="sc">&lt;</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
