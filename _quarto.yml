@@ -22,6 +22,8 @@ website:
               href: "lessons/In-class/in-class_ex2/In-class_Ex02.qmd"
             - text: "In-class exercise 3"
               href: "lessons/In-class/in-class_ex3/In-class_Ex03.qmd"
+            - text: "In-class exercise 4"
+              href: "lessons/In-class/in-class_ex4/In-class_Ex04.qmd"
 
 
 format:
