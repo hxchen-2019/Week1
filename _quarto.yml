@@ -11,23 +11,23 @@ website:
           - text: "Hands-on exercises"
             menu: 
             - text: "Hands-on exercise 2"
-              href: "lessons/Hands-on/Hands-on-Ex2/Hands-on-Ex2.qmd"
+              href: "lessons/Hands-on/Hands-on-Ex2/Hands-on-Ex2.html"
             - text: "Hands-on exercise 3"
-              href: "lessons/Hands-on/Hands-on-Ex3/Hands-on-Ex3.qmd"
+              href: "lessons/Hands-on/Hands-on-Ex3/Hands-on-Ex3.html"
             - text: "Hands-on exercise 4"
-              href: "lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.qmd"
+              href: "lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.html"
           - text: "In-class Exercise"
             menu: 
             - text: "In-class exercise 2"
-              href: "lessons/In-class/in-class_ex2/In-class_Ex02.qmd"
+              href: "lessons/In-class/in-class_ex2/In-class_Ex02.html"
             - text: "In-class exercise 3"
-              href: "lessons/In-class/in-class_ex3/In-class_Ex03.qmd"
+              href: "lessons/In-class/in-class_ex3/In-class_Ex03.html"
             - text: "In-class exercise 4"
-              href: "lessons/In-class/in-class_ex4/In-class_Ex04.qmd"
+              href: "lessons/In-class/in-class_ex4/In-class_Ex04.html"
           - text: "Take Home Exercise"
             menu: 
             - text: "Take Home Exercise 1"
-              href: "lessons/Take-home/Take-home_ex1/Take-home_ex1.qmd"
+              href: "lessons/Take-home/Take-home_ex1/Take-home_ex1.html"
 
 format:
   html:
