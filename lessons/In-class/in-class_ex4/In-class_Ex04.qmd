@@ -49,3 +49,37 @@ tmap_mode('view')
 tm_shape(childcare_sf)+
   tm_dots()
 ```
+
+### Converting to Spatial Dataframe
+
+::: callout-note
+Spatial Polygon has a data table
+:::
+
+```{r}
+childcare <- as_Spatial(childcare_sf)
+mpsz <- as_Spatial(mpsz_sf)
+sg <- as_Spatial(sg_sf)
+```
+
+### Converting to Spatial Object
+
+::: callout-note
+This only retains the geometric
+:::
+
+```{r}
+childcare_sp <- as(childcare, "SpatialPoints")
+sg_sp <- as(sg, "SpatialPolygons")
+```
+
+### Converting to PPP format
+
+::: callout-note
+This drops everything else into a list of coordinates that can only be read by the ST package
+:::
+
+```{r}
+childcare_ppp <- as(childcare_sp, "ppp")
+childcare_ppp
+```
