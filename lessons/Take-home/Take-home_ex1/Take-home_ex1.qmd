@@ -11,3 +11,7 @@ execute:
 
 editor: visual
 ---
+
+```{r}
+pacman::p_load(maptools, sf, raster, spatstat, tmap)
+```

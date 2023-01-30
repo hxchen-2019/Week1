@@ -243,5 +243,12 @@
     "title": "In Class Exercise 4",
     "section": "",
     "text": "1 Loading the package\n\npacman::p_load(maptools, sf, raster, spatstat, tmap)"
+  },
+  {
+    "objectID": "lessons/Take-home/Take-home_ex1/Take-home_ex1.html",
+    "href": "lessons/Take-home/Take-home_ex1/Take-home_ex1.html",
+    "title": "Take Home Exercise 1",
+    "section": "",
+    "text": "pacman::p_load(maptools, sf, raster, spatstat, tmap)"
   }
 ]
