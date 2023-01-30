@@ -19,3 +19,33 @@ editor: visual
 ```{r}
 pacman::p_load(maptools, sf, raster, spatstat, tmap)
 ```
+
+Things to learn outside from this code chunk.
+
+# Load Dataset
+
+```{r}
+childcare_sf <- st_read("data/geospatial/child-care-services-geojson.geojson") %>%
+  st_transform(crs = 3414)
+```
+
+This is already a projected coordinate system. This is converted to meters.
+
+::: callout-note
+For all spatial analysis, all data must be projected coordinate system.
+:::
+
+```{r}
+sg_sf <- st_read(dsn = "data/geospatial", layer="CostalOutline")
+```
+
+```{r}
+mpsz_sf <- st_read(dsn = "data/geospatial", 
+                layer = "MP14_SUBZONE_WEB_PL")
+```
+
+```{r}
+tmap_mode('view')
+tm_shape(childcare_sf)+
+  tm_dots()
+```
