@@ -228,14 +228,14 @@
     "href": "lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.html#clark-and-evans-test-on-cck-planning-area",
     "title": "Hands on Excerise 4",
     "section": "8.2 Clark and Evans Test On CCK Planning Area",
-    "text": "8.2 Clark and Evans Test On CCK Planning Area\n\nclarkevans.test(childcare_ck_ppp,\n                correction=\"none\",\n                clipregion=NULL,\n                alternative=c(\"two.sided\"),\n                nsim=999)\n\n\n    Clark-Evans test\n    No edge correction\n    Monte Carlo test based on 999 simulations of CSR with fixed n\n\ndata:  childcare_ck_ppp\nR = 0.93882, p-value = 0.094\nalternative hypothesis: two-sided"
+    "text": "8.2 Clark and Evans Test On CCK Planning Area\n\nclarkevans.test(childcare_ck_ppp,\n                correction=\"none\",\n                clipregion=NULL,\n                alternative=c(\"two.sided\"),\n                nsim=999)\n\n\n    Clark-Evans test\n    No edge correction\n    Monte Carlo test based on 999 simulations of CSR with fixed n\n\ndata:  childcare_ck_ppp\nR = 0.93037, p-value = 0.07\nalternative hypothesis: two-sided"
   },
   {
     "objectID": "lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.html#clark-and-evans-test-on-tampinese-planning-area",
     "href": "lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.html#clark-and-evans-test-on-tampinese-planning-area",
     "title": "Hands on Excerise 4",
     "section": "8.3 Clark and Evans Test On Tampinese Planning Area",
-    "text": "8.3 Clark and Evans Test On Tampinese Planning Area\n\nclarkevans.test(childcare_tm_ppp,\n                correction=\"none\",\n                clipregion=NULL,\n                alternative=c(\"two.sided\"),\n                nsim=999)\n\n\n    Clark-Evans test\n    No edge correction\n    Monte Carlo test based on 999 simulations of CSR with fixed n\n\ndata:  childcare_tm_ppp\nR = 0.77162, p-value = 0.002\nalternative hypothesis: two-sided"
+    "text": "8.3 Clark and Evans Test On Tampinese Planning Area\n\nclarkevans.test(childcare_tm_ppp,\n                correction=\"none\",\n                clipregion=NULL,\n                alternative=c(\"two.sided\"),\n                nsim=999)\n\n\n    Clark-Evans test\n    No edge correction\n    Monte Carlo test based on 999 simulations of CSR with fixed n\n\ndata:  childcare_tm_ppp\nR = 0.7831, p-value = 0.002\nalternative hypothesis: two-sided"
   },
   {
     "objectID": "lessons/In-class/in-class_ex4/In-class_Ex04.html",
