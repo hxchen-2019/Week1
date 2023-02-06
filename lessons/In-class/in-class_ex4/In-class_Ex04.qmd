@@ -44,10 +44,22 @@ mpsz_sf <- st_read(dsn = "data/geospatial",
                 layer = "MP14_SUBZONE_WEB_PL")
 ```
 
+::: callout-note
+tmap_mode("plot") will give a static map
+
+tmap_mode("view") will give a interactive map
+
+tmap is an extension of leaflet
+
+alpha is to introduce a certain level of opacity
+
+tm_shape is needed to create a new layer. It needs to be at the start of everyplot
+:::
+
 ```{r}
 tmap_mode('view')
-tm_shape(childcare_sf)+
-  tm_dots()
+tm_shape(childcare_sf) +
+  tm_dots(alph = 0.5, size=0.01) 
 ```
 
 ### Converting to Spatial Dataframe
@@ -82,4 +94,13 @@ This drops everything else into a list of coordinates that can only be read by t
 ```{r}
 childcare_ppp <- as(childcare_sp, "ppp")
 childcare_ppp
+```
+
+# Additional Map
+
+```{r}
+tmap_mode('view')
+tm_shape(childcare_sf) +
+  tm_dots(alph = 0.5, size=0.01) +
+  tm_view(set.zoom.limits = c(11,14), set.bounds = TRUE)
 ```
