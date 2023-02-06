@@ -210,7 +210,7 @@ plot(kde_childcareSG_bw)
 ```
 
 ::: callout-note
-Accessing the bandwith used
+The density of the density is determined in meters, therefore it might be difficult to understand the value
 :::
 
 ```{r}
@@ -219,6 +219,10 @@ bw
 ```
 
 ## Rescalling KDE Value
+
+::: callout-note
+Rescaling help to make the number more understandable to the people.
+:::
 
 ```{r}
 childcareSG_ppp.km <- rescale(childcareSG_ppp, 1000, "km")
@@ -285,6 +289,12 @@ plot(density(childcareSG_ppp.km,
 
 # Fixed and Adaptive KDE
 
+::: callout-note
+Usually Adaptive KDE using the jitter method will result in a more pixelated map.
+
+It might be preferred to use a fixed method if all the points are far apart. Jitter is preferred if the points are clustered together.
+:::
+
 ```{r}
 kde_childcareSG_600 <- density(childcareSG_ppp.km, sigma=0.6, edge=TRUE, kernel="gaussian")
 plot(kde_childcareSG_600)
@@ -308,6 +318,10 @@ plot(kde_childcareSG_adaptive, main = "Adaptive bandwidth")
 ```
 
 ## Converting KDE to grid Object
+
+::: callout-note
+Images is practically useless, therefore we need to convert it into a KDE object.
+:::
 
 ```{r}
 gridded_kde_childcareSG_bw <- as.SpatialGridDataFrame.im(kde_childcareSG.bw)
@@ -616,9 +630,19 @@ plot(K_tm.csr, . - r ~ r,
 
 # Second Order Spatial Point Process using L Function
 
+::: callout-note
+L function is preferred as it is easier to understand than 0
+:::
+
 ## Choa Chu Kang
 
 ### Computing L Function Estimate
+
+::: callout-note
+This is a plot without simulation, therefore this is an estimate.
+
+Correction extends the boundary so that we can see more the point at the edge.
+:::
 
 ```{r}
 L_ck = Lest(childcare_ck_ppp, correction = "Ripley")
@@ -628,9 +652,21 @@ plot(L_ck, . -r ~ r,
 
 ### Complete Spatial Randomness Test
 
+::: callout-note
+The envelope method perform the monte carlo simulation of the point. the number of simulation is based on the confidence level.
+:::
+
 ```{r}
 L_ck.csr <- envelope(childcare_ck_ppp, Lest, nsim = 99, rank = 1, glocal=TRUE)
 ```
+
+```{r}
+
+```
+
+::: callout-note
+Based on the graph below. As long as the line is below boundary, it is statistically insignificant. In the Prof example, the distance between 480 and 580, is statistically significant to proof that there is clustering
+:::
 
 ```{r}
 plot(L_ck.csr, . - r ~ r, xlab="d", ylab="L(d)-r")

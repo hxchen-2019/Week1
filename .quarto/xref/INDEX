@@ -37,5 +37,17 @@
   },
   "lessons/Take-home/Take-home_ex1/Take-home_ex1.qmd": {
     "Take-home_ex1.html": "7f59bea7"
+  },
+  "lessons/In-class/in-class_ex5/In-class_Ex05.qmd": {
+    "In-class_Ex05.html": "3ca69071"
+  },
+  "lessons/Hands-on/Hands-on-Ex4/Hands-on-Ex4.knit.md": {
+    "Hands-on-Ex4.knit.html": "70dc99c7"
+  },
+  "lessons/In-class/in-class_ex5/data/stores.qmd": {
+    "stores.html": "1916eb47"
+  },
+  "lessons/In-class/in-class_ex5/data/study_area.qmd": {
+    "study_area.html": "a4705893"
   }
 }

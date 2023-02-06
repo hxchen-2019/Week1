@@ -1,0 +1,129 @@
+---
+title: "In Class Exercise 5"
+author: "Hao Xian"
+date: "6 February 2023"
+date-modified: '`r Sys.Date()`'
+format: html
+number-sections: true
+execute: 
+  echo: true
+  eval: true
+  message: false
+  warning: false
+  
+editor: visual
+---
+
+# Getting Started
+
+```{r}
+pacman::p_load(tidyverse, tmap, sf, sfdep)
+```
+
+# Importing Data
+
+::: callout-note
+Taiwan has 2 projection system
+:::
+
+```{r}
+studyArea <- st_read(dsn = "data",
+                     layer="study_area") %>%
+  st_transform (crs =3829)
+```
+
+```{r}
+stores <- st_read(dsn = "data",
+                     layer="stores") %>%
+  st_transform (crs =3829)
+```
+
+```{r}
+tmap_mode("view")
+tm_shape(studyArea)+
+  tm_polygons() +
+  tm_shape(stores) +
+  tm_dots(col="Name",
+          size = 0.01,
+          border.col="black",
+          border.lwd=0.5)+
+  tm_view(set.zoom.limits = c(12,16))
+```
+
+# Local Colocation Quotients (LCLQ)
+
+::: callout-note
+6 nearest neighbour is used. Include Self is needed as it help to boost the number to an odd number.
+
+This is an adaptive method. Weights of the stores will be stored when st_knernel_weights is used
+:::
+
+```{r}
+nb <- include_self(
+  st_knn(st_geometry(stores),6)
+)
+```
+
+```{r}
+wt <- st_kernel_weights(nb,
+                        stores,
+                        "gaussian",
+                        adaptive = TRUE)
+```
+
+```{r}
+FamilyMart <- stores %>%
+  filter(Name == "Family Mart")
+A <- FamilyMart$Name
+```
+
+```{r}
+SevenEleven <- stores %>%
+  filter(Name == "7-Eleven")
+B <- SevenEleven$Name
+```
+
+::: callout-note
+A is the target
+
+B is the neightbour
+
+nb is a list of nearest neighbour
+
+wt is the weight
+
+49 is the simulation runs
+
+The simulation will run 50 Times, and will generate a different p-value
+
+NA is common in local_colocation()
+:::
+
+```{r}
+LCLQ <- local_colocation (A, B, nb, wt, 49)
+```
+
+::: callout-note
+There is no unique idenitfier therefore, the only code is cbind. cbind cannot work if the results is sorted.
+:::
+
+```{r}
+LCLQ_stores <- cbind(stores, LCLQ)
+```
+
+```{r}
+tmap_mode("view")+
+  tm_shape(studyArea)+
+  tm_polygons() +
+  tm_shape(LCLQ_stores) +
+  tm_dots(col="X7.Eleven",
+          size = 0.01,
+          border.col="black",
+          border.lwd=0.5)+
+  tm_shape(stores)+
+  tm_dots(col="Name",
+          size = 0.01,
+          border.col="black",
+          border.lwd=0.5)
+  tm_view(set.zoom.limits = c(12,16))
+```
