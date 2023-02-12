@@ -23,6 +23,7 @@ Installing all the different packages
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the Code"
+
 pacman::p_load(sf, tidyverse, funModeling)
 ```
 
