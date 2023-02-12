@@ -17,7 +17,7 @@ editor: visual
 ## Setting the Scene
 
 ::: callout-important
-This context is taken from the IS415 Take Home Exercise 1
+This context is taken from the [IS415 Take Home Exercise 1](https://is415-ay2022-23t2.netlify.app/th_ex1.html#setting-the-scene)
 
 All rights belong to Dr Kam Tin Seong.
 :::
@@ -227,7 +227,7 @@ At this step, we now know that we have already loaded all the dataset and that t
 Taking a look at the columns ([NGA Data set (Humanitarian Data Exchange)](#nga-data-set-humanitarian-data-exchange))of the NGA sf dataframe, we could identify most of the redundent fields. The only field that really matters would be the columns
 
 | Columns to Keep | Reasons                                                                        |
-|--------------------|----------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | ADM2_EN         | This is the English Name of the ADM2. This is where the Local Government Area. |
 | ADM2_PCODE      | This is the unique identifier of ADM2                                          |
 | ADM1_EN         | This is the English Name of the ADM1. This is where the States of Nigeria is.  |
@@ -522,6 +522,10 @@ write_rds(NGA_wp, "data/rds/NGA_wp.rds")
 
 # Mapping the Functional and Non Functional Points
 
+Now that we have save the Data in RDS, why not we plot the relevant data into an interactive map for you to see.
+
+We are making use of tmap package to help us in the plotting of the map. [Find out more about tmap package here.](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html)
+
 ```{r}
 tmap_mode("view")
 tm_shape(NGA) +
@@ -541,9 +545,19 @@ tm_shape(wp_functional)+
   tm_view(set.zoom.limits = c(6, 10))
 ```
 
+::: callout-note
+After setting tmap_mode to view. We need to set the tmap_mode back to plot
+:::
+
 ```{r}
 tmap_mode("plot")
 ```
+
+In the event that the above map, takes too long to load, you can view the entire map of Nigeria here.
+
+::: callout-note
+This is generated with tmap as well however, the mode is set to plot, hence a static map is generated.
+:::
 
 ```{r}
 tm_shape(NGA) +
@@ -558,7 +572,9 @@ tm_shape(wp_functional)+
 
 ## Converting sf data to sp's Spatial Class
 
-" This is just a placeholder text"
+As sp's Spatial Class is still commonly used by most of the spatial analysis packages as such we would need to convert the data frame into Spatial Class.
+
+This can be done with the function as_Spatial() function of the sf package. [Find out more about as_Spatial() from sf package here.](https://www.rdocumentation.org/packages/sf/versions/0.3-4/topics/as_Spatial)
 
 ```{r}
 wp_functional_spatial <- as_Spatial(wp_functional)
@@ -568,19 +584,21 @@ NGA_spatial <- as_Spatial(NGA)
 
 ### Viewing each of the sp Spatial Class
 
-Functional
+Here we will view the Spatial Class of the converted data frame.
+
+[**Functional**]{.underline}
 
 ```{r}
 wp_functional_spatial 
 ```
 
-Non Functional
+[**Non Functional**]{.underline}
 
 ```{r}
 wp_nonfunctional_spatial
 ```
 
-NGA
+[**NGA**]{.underline}
 
 ```{r}
 NGA_spatial
@@ -588,21 +606,37 @@ NGA_spatial
 
 ## Converting the Spatial Class into generic sp format
 
+The main package that we are using to analyse out data would be [spatstat](https://cran.r-project.org/web/packages/spatstat/index.html). However, this requires our analytical data to be in the ppp object form.
+
+However, there is no direct way for us to convert a Spatial class into a ppp object. It would need to be converted into a Spatial object first before we can convert it into a ppp object.
+
+We can make use of the as() function from basic R to convert it into a Spatial Object. [Find out more about as() function here.](https://www.rdocumentation.org/packages/methods/versions/3.6.2/topics/as)
+
+::: callout-note
+Note that we are converting the point into Spatial Points, while we are converting the boundaries into "Spatial Polygons"
+:::
+
 ```{r}
 wp_functional_sp <- as(wp_functional_spatial, "SpatialPoints")
 wp_nonfunctional_sp <- as(wp_nonfunctional_spatial, "SpatialPoints")
 NGA_sp <- as(NGA_spatial, "SpatialPolygons")
 ```
 
-### Viewing each
+### Viewing each of the Spatial Points
+
+[Functional]{.underline}
 
 ```{r}
 wp_functional_sp 
 ```
 
+[Non Functional]{.underline}
+
 ```{r}
 wp_nonfunctional_sp
 ```
+
+[NGA]{.underline}
 
 ```{r}
 NGA_sp
@@ -610,20 +644,34 @@ NGA_sp
 
 ## Converting into spatstas ppp format
 
+We can now convert the Spatial Object into a ppp format
+
 ```{r}
 wp_functional_ppp <- as(wp_functional_sp , "ppp")
 wp_nonfunctional_ppp <- as(wp_nonfunctional_sp , "ppp")
 ```
 
+### Viewing each ppp format
+
+[Functional]{.underline}
+
 ```{r}
 wp_functional_ppp
 ```
+
+[Non Functional]{.underline}
 
 ```{r}
 wp_nonfunctional_ppp
 ```
 
 ### Checking for Duplicate Points
+
+::: callout-note
+It is important to check for Duplicate Points, and there are many methods of handling duplicate points such as rjitter().
+:::
+
+We would now need to perform a check to make sure that there is no duplicated points. which we can check using the
 
 ```{r}
 any(duplicated(wp_functional_ppp))
@@ -633,17 +681,29 @@ any(duplicated(wp_functional_ppp))
 any(duplicated(wp_nonfunctional_ppp))
 ```
 
+Since the result is False, it seems that there is no special need to perform other actions to fix the duplicated data.
+
 ## Creating Owin Object
+
+::: callout-note
+An owin object is used to define the polygonal region of the Region of interest.
+:::
+
+We will now wish to confine the geographical area boundary to that of Nigeria, as such we can convert the Spatial Polygon object into owin to help us represent this polygonal region.
 
 ```{r}
 NGA_owin <- as(NGA_sp, "owin")
 ```
+
+### Plotting the Owin
 
 ```{r}
 plot(NGA_owin)
 ```
 
 ### Combining Non Functional Water Point and Functional Water Point with Owin
+
+Now then we can extract the water point events and combine it with the owin data.
 
 ```{r}
 wp_functional_NGA_ppp = wp_functional_ppp[NGA_owin]
@@ -653,87 +713,150 @@ wp_functional_NGA_ppp = wp_functional_ppp[NGA_owin]
 wp_nonfunctional_NGA_ppp = wp_nonfunctional_ppp[NGA_owin]
 ```
 
+### Plotting the Owin Object with Water Points
+
+Now we will plot the owin object to see if we it was successful.
+
+[Functional]{.underline}
+
 ```{r}
 plot(wp_functional_NGA_ppp)
 ```
+
+[Non Functional]{.underline}
 
 ```{r}
 plot(wp_nonfunctional_NGA_ppp)
 ```
 
-# Kernel density Estimation
+# Kernel Density Estimation
+
+As you can see from the owin map data above, it appears it is extremely difficult to gain any insights from the map above. Based on how dark the region, we can assume that there is where most of the waterpoint are, but there is a much better map we can use and that would be Kernal Density Map.
+
+As such we would need perform Kernel Density Estimation to measure the intensity of the point process.
 
 ## Rescaling the KDE values
+
+One issue with the ppp data is that the unit of measurement is in meters, which will cause out density values to be very small.
+
+As such there is a needed to convert the unit measurement into kilometer in order for the density to make better sense.
 
 ```{r}
 wp_functional_NGA_ppp.km <- rescale(wp_functional_NGA_ppp, 1000, "km")
 wp_nonfunctional_NGA_ppp.km <- rescale(wp_nonfunctional_NGA_ppp, 1000, "km")
 ```
 
-## Plotting the Kernal Density
+## Plotting the Kernal Density Map
+
+Now that we have rescaled the data set we can perform Kernel Density Estimation on the datasets.
+
+We can make use of the density() function from the spatstat package to help us generate the Kernal Density map. [Find out more about density() from spatstat here.,](https://www.rdocumentation.org/packages/spatstat/versions/1.64-1/topics/density.ppp) We will making use of the automatic bandwidth methods here.
+
+::: callout-note
+One thing to note is that there are a 3 different spatstat function for us to use to determine the bandwidth, called bw.CvL, bw.scott and bw.ppl. And also kernel needs to be determined as well (I will be using the default "Gaussian".
+
+[According to research by Prof](https://r4gdsa.netlify.app/chap04.html), it was suggested that bw.ppl() is more appropriate to use, when patterns consist predominantly of tight cluster. bw.diggle() is used when the we are trying to detect a single tight cluster in the midst of random noise. [However, both are more commonly use.](https://maczokni.github.io/crime_mapping_textbook/studying-spatial-point-patterns.html)
+
+I have chosen to use diggle(), but results might vary if bw.ppl() is used.
+:::
+
+[Functional Kernal Density Map]{.underline}
 
 ```{r}
 wp_functional_NGA.bw <- density(wp_functional_NGA_ppp.km, sigma=bw.diggle, edge=TRUE, kernel="gaussian")
 plot(wp_functional_NGA.bw)
 ```
 
+[Non Functional Kernal Density Map]{.underline}
+
 ```{r}
 wp_nonfunctional_NGA.bw <- density(wp_nonfunctional_NGA_ppp.km, sigma=bw.diggle, edge=TRUE, kernel="gaussian")
 plot(wp_nonfunctional_NGA.bw)
-
 ```
 
 ## Converting to Grid Object
 
-```{r}
-gridded_kde_wp_nonfunctional_NG_bw <- as.SpatialGridDataFrame.im(wp_nonfunctional_NGA.bw)
-spplot(gridded_kde_wp_nonfunctional_NG_bw)
-```
+We would need to convert the KDE into a suitable format for mapping purpose. The format we are converting would be a Grid Object
+
+[Functional]{.underline}
 
 ```{r}
 gridded_kde_wp_functional_NG_bw <- as.SpatialGridDataFrame.im(wp_functional_NGA.bw)
 spplot(gridded_kde_wp_functional_NG_bw)
 ```
 
+[Non Functional]{.underline}
+
+```{r}
+gridded_kde_wp_nonfunctional_NG_bw <- as.SpatialGridDataFrame.im(wp_nonfunctional_NGA.bw)
+spplot(gridded_kde_wp_nonfunctional_NG_bw)
+```
+
 ## Converting to Raster
+
+After we have converted the data into a Grid Object we would need to convert that into a Raster Layer. We can make use of raster() function of raster package to help us convert. [Find out more about raster package here](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/raster).
+
+Raster object is accepted by tmap as one of the layer for plotting. as such we will be converting it into a raster object
 
 ```{r}
 kde_wp_functional_NG_bw_raster <- raster(gridded_kde_wp_functional_NG_bw)
 kde_wp_nonfunctional_NG_raster <- raster(gridded_kde_wp_nonfunctional_NG_bw)
 ```
 
+::: callout-note
+However, a raster object does not have any CRS information. We would need to project the CRS information into the raster layer. In this case the EPSG code is 26392.
+:::
+
 ```{r}
 projection(kde_wp_functional_NG_bw_raster) <- CRS("+init=EPSG:26392")
 projection(kde_wp_nonfunctional_NG_raster) <- CRS("+init=EPSG:26392")
 ```
 
+### Viewing Raster Object
+
+[Functional]{.underline}
+
 ```{r}
 kde_wp_functional_NG_bw_raster
 ```
+
+[Non Functional]{.underline}
 
 ```{r}
 kde_wp_nonfunctional_NG_raster
 ```
 
-# Plotting Kernal density Map of Whole Nigeria
+# Plotting Kernal Density Map of Whole Nigeria
+
+Now that we have the Kernal Density Map of the whole Nigeria, we can plot it using tmap
+
+[Functional]{.underline}
 
 ```{r}
 tm_shape(kde_wp_functional_NG_bw_raster) + 
-    tm_layout(main.title = "Kernal Density Map of Functional Water Point of Nigeria") +
-  tm_raster("v" , midpoint = NA) +
+    tm_layout(main.title = "KDE of Functional Water Point (NGE)") +
+  tm_raster("v") +
   tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
 ```
 
+[Non Functional]{.underline}
+
 ```{r}
 tm_shape(kde_wp_nonfunctional_NG_raster) + 
-    tm_layout(main.title = "Kernal Density Map of Non Functional Water Point of Nigeria") +
-  tm_raster("v" , midpoint = NA) +
+    tm_layout(main.title = "KDE of Non Functional Water Point (NGE)") +
+  tm_raster("v") +
   tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
 ```
 
 # Plotting Kernal Density Map of Osun Area
 
+::: callout-note
+Most of the Steps here can be found above.
+:::
+
 ## Extracting Osun State from NGA
+
+We can now perform the same steps as above to generate the Kernal Density Map of Osun Area.
 
 ```{r}
 osun = NGA_spatial[NGA_spatial@data$ADM1_EN == "Osun",]
@@ -751,19 +874,27 @@ osun_sp = as(osun, "SpatialPolygons")
 osun_owin = as(osun_sp, "owin")
 ```
 
+## Merging Water Data point with Osun Owin
+
 ```{r}
 wp_functional_osun_ppp = wp_functional_ppp[osun_owin]
 wp_nonfunctional_osun_ppp = wp_nonfunctional_ppp[osun_owin]
 ```
+
+### Rescaling Data Points
 
 ```{r}
 wp_functional_osun_ppp.km = rescale(wp_functional_osun_ppp, 1000, "km")
 wp_nonfunctional_osun_ppp.km = rescale(wp_nonfunctional_osun_ppp, 1000, "km")
 ```
 
+We will plot a map of the functional water point of osun to take a look.
+
 ```{r}
 plot(wp_functional_osun_ppp.km)
 ```
+
+## Generating KDE
 
 ```{r}
 wp_nonfunctional_osun.bw <- density(wp_nonfunctional_osun_ppp.km, sigma=bw.diggle, edge=TRUE, kernel="gaussian")
@@ -774,6 +905,8 @@ plot(wp_nonfunctional_osun.bw)
 wp_functional_osun.bw <- density(wp_functional_osun_ppp.km, sigma=bw.diggle, edge=TRUE, kernel="gaussian")
 plot(wp_functional_osun.bw)
 ```
+
+## Converting KDE to Raster
 
 ```{r}
 gridded_kde_wp_functional_osun_bw <- as.SpatialGridDataFrame.im(wp_functional_osun.bw)
@@ -799,16 +932,18 @@ projection(kde_wp_nonfunctional_osun_bw_raster) <- CRS("+init=EPSG:26393")
 kde_wp_functional_osun_bw_raster
 ```
 
+## Plotting KDE of Osun
+
 ```{r}
 tm_shape(kde_wp_functional_osun_bw_raster) + 
-    tm_layout(main.title = "Kernal Density Map of Functional Water Point of Nigeria") +
+    tm_layout(main.title = "KDE of Functional Water Point (Osun)") +
   tm_raster("v") +
   tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
 ```
 
 ```{r}
 tm_shape(kde_wp_nonfunctional_osun_bw_raster) + 
-    tm_layout(main.title = "Kernal Density Map of Non Functional Water Point of Nigeria") +
+    tm_layout(main.title = "KDE of Non Functional Water Point (Osun)") +
   tm_raster("v") +
   tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
 ```
@@ -817,11 +952,15 @@ tm_shape(kde_wp_nonfunctional_osun_bw_raster) +
 
 ## Testing for Distribution Clarks and Evens
 
+::: callout-note
+Clarks and Evants Test is a Test of Aggregation, Further Testing would need to be performed in order for us to determine if the Hypothesis is True. [Find out more about clarksevans.test() here.](https://www.rdocumentation.org/packages/spatstat/versions/1.63-3/topics/clarkevans.test)
+:::
+
 The test hypotheses are:
 
-Ho = The distribution of water points are randomly distributed.
+Ho = The distribution of water points in Osun are randomly distributed.
 
-H1= The distribution of water points are not randomly distributed.
+H1= The distribution of water points in Osun are not randomly distributed.
 
 The 95% confident interval will be used.
 
@@ -834,7 +973,7 @@ clarkevans.test(wp_functional_osun_ppp,
 ```
 
 ::: callout-note
-We therefore reject the null Hypothesis that the Functional water point are randomly distributed.
+We therefore reject the null Hypothesis that the Functional water point are randomly distributed as the p-value is greater than 0.01.
 :::
 
 ```{r}
@@ -846,52 +985,76 @@ clarkevans.test(wp_nonfunctional_osun_ppp,
 ```
 
 ::: callout-note
-We therefore reject the null Hypothesis that the non Functional water point are randomly distributed.
+We therefore reject the null Hypothesis that the non Functional water point are randomly distributed as the p-value is greater than 0.01.
 :::
 
 ## Analysis of Functional and Non Functional Water point
 
-When looking at the 2 Kernal Density Points, it is easy to assume that there seems to be almost no pattern on the density of the water point, however, one can easily assume that there is no pattern in where all the water points are located. However upon further inspection, there seems to be 2 trends that can be spotted based in the difference in map density.
+When looking at the 2 Kernal Density Map, it is easy to assume that there seems to be almost no pattern on the density of the water point, however, one can easily assume that there is no pattern in where all the water points are located.
 
-### Areas with High Functional Water Point and Non Functional Water Point seems to be located in cities.
+However upon further inspection, there seems to be 2 trends that can be spotted based in the difference in map density. In other to help out in the spotting of the trend, a map of Osun from Google map was include below for the trend to be more easily view able.
 
-![Taken from Google Maps](images/Capture.PNG)
+### Areas with High Functional Water Point and Non Functional Water Point are clustered together in the cities in Osun. 
 
-Taking a look at the map above and comparing it with the KDE Map, areas with high density of functional and non functional water points seems to coincide with where the major cities are located. This seems to make the most sense as cities are where most people lives and need the access to water, as such it make sense most of the water point to concentrate itself in the cities. In This regards, Large Cities tend to have a larger concentration of functional and non functional water points as compared to smaller cities.
+![Copyrighted: Taken from Google Maps](images/Capture.PNG)
 
-Ede seems to have the largest amount of Functional Water Point, whereas Ife seems to have the largest amount of Non Functional Water Point.
+Taking a look at the map above and comparing it with the KDE Map, areas with high density of functional and non functional water points seems to coincide with where the cities are located. This seems to make the most sense as cities are where most people lives and need the access to water, as such it make sense most of the water point to concentrate itself in the cities.
 
-### In Cities with High Density of Functional Water Point, the Density of Non Functional Water Point is Low relatively.
+In this regards, Large cities tend to have a larger concentration of functional and non functional water points as compared to smaller cities. On the other hand, areas of very low human density such as the Both Nature Reserve seem to have almost no Water Points whether they are functional or not.
 
-::: callout-tip
-Density of Water points are taken in context among the cities
+::: callout-important
+*Based on this observations, we can hypothesis that both the Functional Water Point and Non Functional Water Point are clustered together in the state of Osun. Further Validation using Second Spatial Point Pattern Analysis would need to be performed.*
 :::
 
-As we have already establish that water points are concentrated at cities, it would make sense that most of our Analysis will focus upon the cities. In this regard, one surprising fact is that cities with High Density of Functional Water Point tend to have a comparitively lower density of Functional Water point. Take Ede for example, it has the highest density of Functional Water Point, yet it has one of the lower level of Non Functional Water Points relatively. This trend can be seen in Ife and other areas as well.
+### Functional and Non Functional Water Point are clustered together in cities of Osun
 
-However, there seems to be one exception to this trend, and that would be the city of Iwo. The city Iwo observed a high density of both functional and non functional water points.
+![Functional Water Point KDE](images/view.PNG)
 
-## Comparison between Kernal Density Map and Point Map.
+![Non Functional Water Point KDE](images/view2.PNG)
 
-### Kernal Density Map are better at spotting trends as compared to Point Map
+We have already establish in the previous observation that Most of the Water Points in the Cities. When we observed the density of the Functional Water Points and Non Functional Water Points in the state, we come to a hypothesis that the water points are clustered together in the State of Osun. However, if we were to inspect the KDE of both water points more closely focusing on the cities, we have reason to believe that the functional water and non functional water points are clustered together among themselves in the cities as well.
 
-Kernal Density Map are much better at spotting trends as compared to that of the point map. A Point map will highlight each individual water point out and this can be difficult for us to determine any trend at all. With reference to the map in [Mapping the Functional and Non Functional Points], there seems to be almost no difference in the density of the water points in the area, or at the very least it is difficult to tell. A Kernal Density Map solve this by smoothing over the points and providing a density number.
+The 2 images above are captures of the cities of Ede. Despite both being in the same city, the water points appeared to be clustered together as well. This can be observed in other points in the Functional Water Point KDE and Non Functional Water Point KDE as well.
 
-### Kernal Density Map are less computationally intensive to display as compared to Point Map
+::: callout-important
+*Based on this observations, we can hypothesis that both the Functional Water Point and Non Functional Water Point are clustered together in the cities of the state of Osun. Further Validation using Second Spatial Point Pattern Analysis would need to be performed.*
+:::
+
+## Comparison between Kernel Density Map and Point Map.
+
+### Kernel Density Map are better at spotting trends as compared to Point Map
+
+Kernal Density Map are much better at spotting trends as compared to that of the point map. A Point map will highlight each individual water point out and this can be difficult for us to determine any trend at all.
+
+With reference to the map in [Mapping the Functional and Non Functional Points], there seems to be almost no difference in the density of the water points in the area, or at the very least it is difficult to tell. A Kernel Density Map solve this by smoothing over the points and providing a density number, whereas for Point Map, we can only observed the areas based on the number of points. T
+
+*Kernel Density Map provides a Quantitative Value as compared to the Qualitative observation of Point Map in detecting trends.*
+
+### Kernal Density Map are less computationally intensive to display as compared to Point Map in an interactive map
 
 A Point Map with it thousands of points is more computationally intensive to display are compared to Kernal Density Map. This is because the computer would need to take note of every individual point and plot it out which would be an issue for computers with low computational power.
 
-# Spatial Correlation Analysis
+### Kernel Density Map is able to provide an estimation of the concentration of points.
 
-Now that we have analysed the spatial point patters, we would need to confirm our observations statistically - which is where hypothesis comes in.
+Kernel Density takes into account the inverse-distance weighted counts of the existing point to estimate the concentration of points in an given area. This means that the estimated cells values are derived based on the weights of the existing points, with the furthest points having the lowest weights. This process in turns smooth the density generated and can help to give a more pronounced gradient.
 
--   H0: The distribution of the Functional Water Points Listings are randomly distributed
+[Find out more about Inverse Distance Weighted here.](https://pro.arcgis.com/en/pro-app/latest/help/analysis/geostatistical-analyst/how-inverse-distance-weighted-interpolation-works.htm)
+
+# 2nd Order Spatial Point Analysis
+
+Now that we have analysed the spatial point patterns, we would need to confirm our observations statistically - which is where hypothesis comes in.
+
+Our Hypothesis:
+
+-   H0: The distribution of the Functional Water Points are randomly distributed
 
 -   H1: The distribution of the Non Functional Water Points are not randomly distributed
 
 -   Confidence level : 99%
 
-We will be performing the Hypothesis Testing for 3 different cities that I have selected and that would be the Osogbo, Ede and Iwo.
+We will be performing the Hypothesis Testing for 3 different cities that I have selected and that would be the Osogbo, Ede and Iwo. We will also be performing it on the State of Osun.
+
+Before that we would need to extract the water points data from the 3 cities as well, following the same steps we did to extract the data of the Osun State.
 
 ## Defining the Areas
 
@@ -936,21 +1099,36 @@ wp_nonfunctional_ede_ppp.km = rescale(wp_nonfunctional_ede_ppp, 1000, "km")
 
 ```
 
-## Computing G Score
+## Computing G Function
+
+Now that we have extracted the dataset for the 3 cities and converted it into ppp format we can now perform our 2nd Order Spatial Analysis on them.
+
+For this we have chose to use G Function to test our Hypothesis. [As stated by our Professor,](https://r4gdsa.netlify.app/chap05.html#second-order-spatial-point-patterns-analysis) G Function is a measure of the distribution from an arbitrary event to its nearest event. It estimates the nearest neighbour distance distribution from a point pattern in a window of arbitrary shape. It is recommended that [G Function is a useful statistic summarising one aspect of the \`\`clustering'' of points.](https://www.rdocumentation.org/packages/spatstat.core/versions/2.3-1/topics/Gest) As such we will make use of G Function to test our Hypothesis on whether the points are randomly distributed or not.
+
+For us to perform G Function Analysis we will be making use of Gest() Function from spatstat. F[ind out more about Gest() from spatstat here.](https://www.rdocumentation.org/packages/spatstat.core/versions/2.3-1/topics/Gest) To further confirm our Hypothesis we would need to perform a Monte Carlo Simulation Test with G Function to test our Hypothesis.
 
 ### Iwo
 
-#### Functional Water Point
+#### Computing G_Function Estimation for Functional Water Point
 
--   **H0: The distribution of the Functional Water Points in Iwo are randomly distributed**
+```{r}
+G_iwo = Gest(wp_functional_iwo_ppp.km, correction = "border")
+plot(G_iwo)
+```
 
--   **H1: The distribution of the Functional Water Points in Iwo are not randomly distributed**
+#### Testing the Hypothesis of Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Functional Water Points in Iwo are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Functional Water Points in Iwo are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_iwo_fuctional.csr <- envelope(wp_functional_iwo_ppp.km, Gest, nsim=100)
@@ -960,20 +1138,30 @@ G_iwo_fuctional.csr <- envelope(wp_functional_iwo_ppp.km, Gest, nsim=100)
 plot(G_iwo_fuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Iwo area are clustered. Hence, we reject the null hypothesis that
-Functional Water Point in the Iwo area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion:** The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Iwo area are clustered. Hence, we reject the null hypothesis that Functional Water Point in the Iwo area are randomly distributed at 99% confident interval**.**
+:::
 
-#### Non Functional Water Point
+#### Computing G_Fuction Estimate for Non Functional Water Point
 
--   **H0: The distribution of the Non Functional Water Points in Iwo are randomly distributed**
+```{r}
+G_iwo_non = Gest(wp_nonfunctional_iwo_ppp.km, correction = "border")
+plot(G_iwo_non)
+```
 
--   **H1: The distribution of the Non Functional Water Points in Iwo are not randomly distributed**
+#### Testing the Hypothesis of Non Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Non Functional Water Points in Iwo are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Non Functional Water Points in Iwo are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_iwo_nonfuctional.csr <- envelope(wp_nonfunctional_iwo_ppp.km, Gest, nsim=100)
@@ -983,22 +1171,32 @@ G_iwo_nonfuctional.csr <- envelope(wp_nonfunctional_iwo_ppp.km, Gest, nsim=100)
 plot(G_iwo_nonfuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Iwo area are clustered. Hence, we reject the null hypothesis that
-Non Functional Water Point in the Iwo area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion:** The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Iwo area are clustered. Hence, we reject the null hypothesis that Non Functional Water Point in the Iwo area are randomly distributed at 99% confident interval**.**
+:::
 
 ### Osogbo
 
-#### Functional Water Point
+#### Computing G-Fuction Estimate of Functional Water Point
 
--   **H0: The distribution of the Functional Water Points in Osogbo are randomly distributed**
+```{r}
+G_osogbo = Gest(wp_functional_osogbo_ppp.km, correction = "border")
+plot(G_osogbo)
+```
 
--   **H1: The distribution of the Functional Water Points in Osogbo are not randomly distributed**
+#### Testing the Hypothesis of Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Functional Water Points in Osogbo are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Functional Water Points in Osogbo are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_osogbo_fuctional.csr <- envelope(wp_functional_osogbo_ppp.km, Gest, nsim=100)
@@ -1008,20 +1206,30 @@ G_osogbo_fuctional.csr <- envelope(wp_functional_osogbo_ppp.km, Gest, nsim=100)
 plot(G_osogbo_fuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Osogbo area are clustered. Hence, we reject the null hypothesis that
-Functional Water Point in the Osogbo area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion**: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Osogbo area are clustered. Hence, we reject the null hypothesis that Functional Water Point in the Osogbo area are randomly distributed at 99% confident interval**.**
+:::
 
-#### Non Functional Water Point
+#### Computing G_Function Estimate for Non Functional Water Point
 
--   **H0: The distribution of the Non Functional Water Points in Osogbo are randomly distributed**
+```{r}
+G_osogbo_non = Gest(wp_nonfunctional_osogbo_ppp.km, correction = "border")
+plot(G_osogbo_non)
+```
 
--   **H1: The distribution of the Non Functional Water Points in Osogbo are not randomly distributed**
+#### Testing the Hypothesis of Non Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Non Functional Water Points in Osogbo are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Non Functional Water Points in Osogbo are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_osogbo_nonfuctional.csr <- envelope(wp_nonfunctional_osogbo_ppp.km, Gest, nsim=100)
@@ -1031,22 +1239,32 @@ G_osogbo_nonfuctional.csr <- envelope(wp_nonfunctional_osogbo_ppp.km, Gest, nsim
 plot(G_osogbo_nonfuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Osobo area are clustered. Hence, we reject the null hypothesis that
-Non Functional Water Point in the Osobo area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion**: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Osobo area are clustered. Hence, we reject the null hypothesis that Non Functional Water Point in the Osobo area are randomly distributed at 99% confident interval**.**
+:::
 
 ### Ede
 
-#### Functional Water Point
+#### Computing G_Function Estimate for Functional Water Point
 
--   **H0: The distribution of the Functional Water Points in Ede are randomly distributed**
+```{r}
+G_ede = Gest(wp_functional_ede_ppp.km, correction = "border")
+plot(G_ede)
+```
 
--   **H1: The distribution of the Functional Water Points in Ede are not randomly distributed**
+#### Testing the Hypothesis of Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Functional Water Points in Ede are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Functional Water Points in Ede are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_ede_fuctional.csr <- envelope(wp_functional_ede_ppp.km, Gest, nsim=100)
@@ -1056,20 +1274,30 @@ G_ede_fuctional.csr <- envelope(wp_functional_ede_ppp.km, Gest, nsim=100)
 plot(G_ede_fuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Ede area are clustered. Hence, we reject the null hypothesis that
-Functional Water Point in the Ede area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion**: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Ede area are clustered. Hence, we reject the null hypothesis that Functional Water Point in the Ede area are randomly distributed at 99% confident interval**.**
+:::
 
-#### Non Functional Water Point
+#### Computing G_Function Estimate for Non Functional Water Point
 
--   **H0: The distribution of the Non Functional Water Points in Ede are randomly distributed**
+```{r}
+G_ede_non = Gest(wp_nonfunctional_ede_ppp.km, correction = "border")
+plot(G_ede_non)
+```
 
--   **H1: The distribution of the Non Functional Water Points in Ede are not randomly distributed**
+#### Testing the Hypothesis of Non Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Non Functional Water Points in Ede are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Non Functional Water Points in Ede are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_ede_nonfuctional.csr <- envelope(wp_nonfunctional_ede_ppp.km, Gest, nsim=100)
@@ -1079,22 +1307,32 @@ G_ede_nonfuctional.csr <- envelope(wp_nonfunctional_ede_ppp.km, Gest, nsim=100)
 plot(G_ede_nonfuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Ede area are clustered. Hence, we reject the null hypothesis that Non
-Functional Water Point in the Ede area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion**: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Ede area are clustered. Hence, we reject the null hypothesis that Non Functional Water Point in the Ede area are randomly distributed at 99% confident interval**.**
+:::
 
 ### Osun
 
-#### Functional Water Point
+#### Computing G_Function Estimate for Functional Water Point
 
--   **H0: The distribution of the Functional Water Points in Osun are randomly distributed**
+```{r}
+G_osun = Gest(wp_functional_osun_ppp.km, correction = "border") 
+plot(G_osun)
+```
 
--   **H1: The distribution of the Functional Water Points in Osun are not randomly distributed**
+#### Testing the Hypothesis for Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Functional Water Points in Osun are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Functional Water Points in Osun are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_osun_fuctional.csr <- envelope(wp_functional_osun_ppp.km, Gest, nsim=100)
@@ -1104,20 +1342,30 @@ G_osun_fuctional.csr <- envelope(wp_functional_osun_ppp.km, Gest, nsim=100)
 plot(G_osun_fuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Osun area are clustered. Hence, we reject the null hypothesis that
-Functional Water Point in the Osun area are randomly distributed at 99% confident interval**.**
+::: callout-important
+Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Functional Water Point in the Osun area are clustered. Hence, we reject the null hypothesis that Functional Water Point in the Osun area are randomly distributed at 99% confident interval**.**
+:::
 
-#### Non Functional Water Point
+#### Computing G_Function Estimate for Non Functional Water Point
 
--   **H0: The distribution of the Non Functional Water Points in Ede are randomly distributed**
+```{r}
+G_osun_non = Gest(wp_nonfunctional_osun_ppp.km, correction = "border") 
+plot(G_osun_non)
+```
 
--   **H1: The distribution of the Non Functional Water Points in Ede are not randomly distributed**
+#### Hypothesis Testing For Non Functional Water Point
 
--   **Confidence level : 99%**
+**Our Hypothesis:**
 
--   **Significance level : 0.01**
+-   H0: The distribution of the Non Functional Water Points in Osun are randomly distributed
 
--   **The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.**
+-   H1: The distribution of the Non Functional Water Points in Osun are not randomly distributed
+
+-   Confidence level : 99%
+
+-   Significance level : 0.01
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.01.
 
 ```{r}
 G_osun_nonfuctional.csr <- envelope(wp_nonfunctional_osun_ppp.km, Gest, nsim=100)
@@ -1127,5 +1375,141 @@ G_osun_nonfuctional.csr <- envelope(wp_nonfunctional_osun_ppp.km, Gest, nsim=100
 plot(G_osun_nonfuctional.csr)
 ```
 
-Conclusion: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Osun area are clustered. Hence, we reject the null hypothesis that
-Functional Water Point in the Osun area are randomly distributed at 99% confident interval**.**
+::: callout-important
+**Conclusion**: The observed G(r) is far above the G(theo) as well as the envelope - indicating that Non Functional Water Point in the Osun area are clustered. Hence, we reject the null hypothesis that Functional Water Point in the Osun area are randomly distributed at 99% confident interval**.**
+:::
+
+## Conclusion for 2nd Order Spatial Point Analysis
+
+### Areas with High Functional Water Point and Non Functional Water Point are clustered together in the cities in Osun
+
+Based on our G Function Analysis, since we have determined that both the Functional Water Point and the Non Functional Point are not randomly distributed at 99% Confidence interval in Osun. Hence, we can determine that they are clusted together
+
+### Functional and Non Functional Water Point are clustered together in cities of Osun
+
+Based on our G Function Analysis, since we have determined that both the Functional Water Point and the Non Functional Point are not randomly distributed at 99% Confidence interval in 3 main cities Iwo, Osogbo and Ede. Hence, we can determine that they are clusted together
+
+# Spatial Correlation Analysis
+
+Know that we have determined that both the Functional Water Point and Non Functional Water Points are not randomly distributed but clustered, we are given a rather interesting question, are they independent of each other. In other words, does the presence of a functional water point affect the presence of another water point.
+
+Therefore we have come up with 2 new Hypothesis for Functional and Non Functional:
+
+**Our Hypothesis:**
+
+-   H0: The distribution of the Water Points are independent of each other
+
+-   H1: The distribution of the Non Functional Water Points are not independent of each other.
+
+-   Confidence level : 95%
+
+We will be testing this Hypothesis on the Functional and Non Functional Water Points only in the State of Osun.
+
+## Computing L Function
+
+In order to test for Correlation we would need to perform a K Function. [K function is a popular technique for analyzing spatial correlation in point patterns.](https://book.spatstat.org/sample-chapters/chapter07.pdf) It measures the number of events found up to a given distance of any particular event, [according to Prof.](https://r4gdsa.netlify.app/chap05.html#analysing-spatial-point-process-using-k-function) This makes it perfect for testing for Spatial Correlation Analysis.
+
+However,[K Function makes it difficult for us to discern difference between the Theortical K and Predicted K at lower values](http://personal.colby.edu/personal/m/mgimond/Spatial/K%20and%20L%20functions.html), as such we will be making use of the L Function instead. L Function is a transformation of K Function before applying a square root transformation, which theoretical stabilised the variance of the estimator.
+
+For us to perform L Function Analysis we will be making use of Lest() Function from spatstat. [Find out more about Lest() Function from spatstat here](https://www.rdocumentation.org/packages/spatstat/versions/1.64-1/topics/Lest). To further confirm our Hypothesis we would need to perform a Monte Carlo Simulation Test with G Function to test our Hypothesis.
+
+### Functional Water Point
+
+#### Computing L Function Estimate
+
+```{r}
+#| eval: false
+L_fun_osun = Lest(wp_functional_osun_ppp.km, correction = "Ripley")
+plot(L_fun_osun, . -r ~ r, 
+     ylab= "L(d)-r", xlab = "d")
+```
+
+![](images/L_Functional_Curve-01.png)
+
+#### Testing the Hypothesis on Functional Water Point
+
+**Our Hypothesis:**
+
+-   H0: The distribution of the Functional Water Points in Osun are independent of each other
+
+-   H1: The distribution of the Functional Water Points in Osun are not independent of each other
+
+-   Confidence level : 95%
+
+-   Significance level : 0.05
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05.
+
+```{r}
+#| eval: false
+
+L_fun_osun.csr <- envelope(wp_functional_osun_ppp.km, Lest, nsim = 39, rank = 1, glocal=TRUE)
+```
+
+```{r}
+#| eval: false
+plot(L_fun_osun.csr, . - r ~ r, xlab="d", ylab="L(d)-r")
+```
+
+![](images/L_Func_MonteCarlo.png)
+
+::: callout-important
+**Conclusion**: The observed L(r)-r(obs) is far above the L(r)-r(theo) as well as the envelope for almost all distance of d- indicating that Functional Water Point in the Osun are not independent of each other. Hence, we reject the null hypothesis that Functional Water Point in the Osun are independent of each other at all distance of d at 95% confidence interval.
+:::
+
+### Non Functional Water Point
+
+#### Computing L Function Estimate
+
+```{r}
+#| eval: false
+L_non_fun_osun = Lest(wp_nonfunctional_osun_ppp.km, correction = "Ripley")
+plot(L_non_fun_osun, . -r ~ r, 
+     ylab= "L(d)-r", xlab = "d")
+```
+
+![](images/L_NonFunctional_Curve.png)
+
+#### Testing the Hypothesis of Non Functional Water Point
+
+**Our Hypothesis:**
+
+-   H0: The distribution of the Non Functional Water Points in Osun are independent of each other
+
+-   H1: The distribution of the Non Functional Water Points in Osun are not independent of each other
+
+-   Confidence level : 95%
+
+-   Significance level : 0.05
+
+-   The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05.
+
+```{r}
+#| eval: false
+L_non_fun_osun.csr <- envelope(wp_nonfunctional_osun_ppp.km, Lest, nsim = 39, rank = 1, glocal=TRUE)
+```
+
+```{r}
+#| eval: false
+plot(L_non_fun_osun.csr, . - r ~ r, xlab="d", ylab="L(d)-r")
+```
+
+![](images/L_NonFunctional_MonteCarlo.png)
+
+::: callout-important
+**Conclusion**: The observed L(r)-r(obs) is far above the L(r)-r(theo) as well as the envelope for almost all distance of d- indicating that Non Functional Water Point in the Osun are not independent of each other. Hence, we reject the null hypothesis that Non Functional Water Point in the Osun are independent of each other at all distance of d at 95% confidence interval.
+:::
+
+## Conclusion
+
+### Functional Water Point are not independent of each other in the State of Osun
+
+Based on the Conclusion of L Function Test, we need to reject the null hypothesis that Functional Water Point in the Osun are independent of each other at all distance of d at 95% confidence interval, therefore we can conclude that Functional Water Point in the Osun area are not independent of each other.
+
+### Non Functional Water Point are not independent of each other in the State of Osun
+
+Based on the Conclusion of L Function Test, we need to reject the null hypothesis that Non Functional Water Point in the Osun are independent of each other at all distance of d at 95% confidence interval, therefore we can conclude that Functional Water Point in the Osun area are not independent of each other.
+
+# Special Thanks
+
+Special Thanks to Dr Kam Tin Seong for his guidance and help.
