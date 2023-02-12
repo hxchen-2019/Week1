@@ -227,7 +227,7 @@ At this step, we now know that we have already loaded all the dataset and that t
 Taking a look at the columns ([NGA Data set (Humanitarian Data Exchange)](#nga-data-set-humanitarian-data-exchange))of the NGA sf dataframe, we could identify most of the redundent fields. The only field that really matters would be the columns
 
 | Columns to Keep | Reasons                                                                        |
-|-------------------|-----------------------------------------------------|
+|-----------------|--------------------------------------------------------------------------------|
 | ADM2_EN         | This is the English Name of the ADM2. This is where the Local Government Area. |
 | ADM2_PCODE      | This is the unique identifier of ADM2                                          |
 | ADM1_EN         | This is the English Name of the ADM1. This is where the States of Nigeria is.  |
@@ -994,7 +994,7 @@ When looking at the 2 Kernal Density Map, it is easy to assume that there seems 
 
 However upon further inspection, there seems to be 2 trends that can be spotted based in the difference in map density. In other to help out in the spotting of the trend, a map of Osun from Google map was include below for the trend to be more easily view able.
 
-### Areas with High Functional Water Point and Non Functional Water Point are clustered together in the cities in Osun. 
+### Areas with High Functional Water Point and Non Functional Water Point are clustered together in the cities in Osun.
 
 ![Copyrighted: Taken from Google Maps](images/Capture.PNG)
 
