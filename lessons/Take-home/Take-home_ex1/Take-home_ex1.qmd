@@ -2,7 +2,7 @@
 title: "Take Home Exercise 1"
 author: "Hao Xian"
 date: "30 January 2023"
-date-modified: '`r Sys.Date()`'
+date-modified: "12 February 2023"
 execute: 
   echo: true
   eval: true
@@ -227,7 +227,7 @@ At this step, we now know that we have already loaded all the dataset and that t
 Taking a look at the columns ([NGA Data set (Humanitarian Data Exchange)](#nga-data-set-humanitarian-data-exchange))of the NGA sf dataframe, we could identify most of the redundent fields. The only field that really matters would be the columns
 
 | Columns to Keep | Reasons                                                                        |
-|-----------------|--------------------------------------------------------------------------------|
+|------------------|------------------------------------------------------|
 | ADM2_EN         | This is the English Name of the ADM2. This is where the Local Government Area. |
 | ADM2_PCODE      | This is the unique identifier of ADM2                                          |
 | ADM1_EN         | This is the English Name of the ADM1. This is where the States of Nigeria is.  |

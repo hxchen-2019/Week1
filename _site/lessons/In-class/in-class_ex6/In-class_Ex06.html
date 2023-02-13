@@ -236,6 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data"><span class="toc-section-number">2</span>  The data</a>
   <ul class="collapse">
   <li><a href="#importing-the-geospatial-data" id="toc-importing-the-geospatial-data" class="nav-link" data-scroll-target="#importing-the-geospatial-data"><span class="toc-section-number">2.1</span>  Importing the Geospatial data</a></li>
+  <li><a href="#importing-geospatial" id="toc-importing-geospatial" class="nav-link" data-scroll-target="#importing-geospatial"><span class="toc-section-number">2.2</span>  Importing GeoSpatial</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -301,6 +302,26 @@ Important
 <h1 data-number="2"><span class="header-section-number">2</span> The data</h1>
 <section id="importing-the-geospatial-data" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="importing-the-geospatial-data"><span class="header-section-number">2.1</span> Importing the Geospatial data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hunan <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="at">dsn =</span> <span class="st">"data/geospatial"</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">layer =</span> <span class="st">"Hunan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `Hunan' from data source 
+  `C:\hxchen-2019\birdie\lessons\In-class\in-class_ex6\data\geospatial' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 88 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 108.7831 ymin: 24.6342 xmax: 114.2544 ymax: 30.12812
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+</div>
+</section>
+<section id="importing-geospatial" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="importing-geospatial"><span class="header-section-number">2.2</span> Importing GeoSpatial</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hunan2012 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/aspatial/Hunan_2012.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
