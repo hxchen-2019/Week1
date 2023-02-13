@@ -823,13 +823,27 @@
     "href": "lessons/In-class/in-class_ex6/In-class_Ex06.html#importing-the-geospatial-data",
     "title": "In Class Exercise 6",
     "section": "2.1 Importing the Geospatial data",
-    "text": "2.1 Importing the Geospatial data\n\nhunan <- st_read(dsn = \"data/geospatial\", \n                 layer = \"Hunan\")\n\nReading layer `Hunan' from data source \n  `C:\\hxchen-2019\\birdie\\lessons\\In-class\\in-class_ex6\\data\\geospatial' \n  using driver `ESRI Shapefile'\nSimple feature collection with 88 features and 7 fields\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 108.7831 ymin: 24.6342 xmax: 114.2544 ymax: 30.12812\nGeodetic CRS:  WGS 84"
+    "text": "2.1 Importing the Geospatial data\n\n\n\n\n\n\nNote\n\n\n\nThis file is loaded as a sf dataframe\n\n\n\nhunan <- st_read(dsn = \"data/geospatial\", \n                 layer = \"Hunan\")\n\nReading layer `Hunan' from data source \n  `C:\\hxchen-2019\\birdie\\lessons\\In-class\\in-class_ex6\\data\\geospatial' \n  using driver `ESRI Shapefile'\nSimple feature collection with 88 features and 7 fields\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: 108.7831 ymin: 24.6342 xmax: 114.2544 ymax: 30.12812\nGeodetic CRS:  WGS 84"
   },
   {
     "objectID": "lessons/In-class/in-class_ex6/In-class_Ex06.html#importing-geospatial",
     "href": "lessons/In-class/in-class_ex6/In-class_Ex06.html#importing-geospatial",
     "title": "In Class Exercise 6",
     "section": "2.2 Importing GeoSpatial",
-    "text": "2.2 Importing GeoSpatial\n\nhunan2012 <- read_csv(\"data/aspatial/Hunan_2012.csv\")"
+    "text": "2.2 Importing GeoSpatial\n\n\n\n\n\n\nNote\n\n\n\nThis input is recorded as tibble dataframe\n\n\n\nhunan2012 <- read_csv(\"data/aspatial/Hunan_2012.csv\")\n\n\n2.2.1 Combining both data frame by using left join\n\n\n\n\n\n\nNote\n\n\n\nIn order to retain the geospatial properties, the left data frame must be the sf data frame.\nWe need to make sure that the name is the same, it is Case-Sensitive!!\n\n\n\nhunan_GDPPC <- left_join(hunan,hunan2012)%>%\n  select(1:4, 7, 15)\n\n\n\n2.2.2 Plotting a Choropleth map\n\ntmap_mode(\"plot\") \ntm_shape(hunan_GDPPC) +\n  tm_fill(\"GDPPC\",\n          style = \"quantile\",\n          palette = \"Blues\",\n          title = \"GDPPC\") +\n  tm_layout(main.title = \"Distribution of GDP per capita by district, Hunan Province\", \n            main.title.position = \"center\",\n            main.title.size = 1.2,\n            legend.height = 0.45,\n            legend.width = 0.35,\n            frame = TRUE) +\n  tm_borders(alpha = 0.5) +\n  tm_compass(type=\"8star\", size = 2) +\n  tm_scale_bar() +\n  tm_grid(alpha = 0.2)"
+  },
+  {
+    "objectID": "lessons/In-class/in-class_ex6/In-class_Ex06.html#identify-area-neighbours",
+    "href": "lessons/In-class/in-class_ex6/In-class_Ex06.html#identify-area-neighbours",
+    "title": "In Class Exercise 6",
+    "section": "2.3 Identify area Neighbours",
+    "text": "2.3 Identify area Neighbours\n\n2.3.1 Calculating Contiguit neighbour methods\n\n\n\n\n\n\nNote\n\n\n\nThe code junk below uses st_contiguity is used to derive a contiguity neighbour list using Queen’s method.\nThe code chunk below will store the results into a new sf data frame at the first column (.before = 1_\n\n\n\ncn_queen <- hunan_GDPPC %>%\n  mutate(nb = st_contiguity(geometry), \n         .before = 1)\n\n\ncn_rook <- hunan_GDPPC %>%\n  mutate(nb = st_contiguity(geometry), \n         queen = FALSE,\n         .before = 1)"
+  },
+  {
+    "objectID": "lessons/In-class/in-class_ex6/In-class_Ex06.html#computing-contiguity-weights",
+    "href": "lessons/In-class/in-class_ex6/In-class_Ex06.html#computing-contiguity-weights",
+    "title": "In Class Exercise 6",
+    "section": "2.4 Computing contiguity weights",
+    "text": "2.4 Computing contiguity weights\n\n2.4.1 Queens Method\n\nwm_q <- hunan_GDPPC %>%\n  mutate(nb = st_contiguity(geometry), \n         wt = st_weights(nb),\n         .before = 1)\n\n\n\n2.4.2 Rooks Method\n\nwm_r <- hunan_GDPPC %>%\n  mutate(nb = st_contiguity(geometry), \n         queen = FALSE,\n         wt = st_weights(nb),\n         .before = 1)"
   }
 ]
