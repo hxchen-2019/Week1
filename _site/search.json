@@ -810,5 +810,19 @@
     "title": "Take Home Exercise 1",
     "section": "Conclusion",
     "text": "Conclusion\n\nFunctional Water Point are not independent of each other in the State of Osun\nBased on the Conclusion of L Function Test, we need to reject the null hypothesis that Functional Water Point in the Osun are independent of each other at all distance of d at 95% confidence interval, therefore we can conclude that Functional Water Point in the Osun area are not independent of each other.\n\n\nNon Functional Water Point are not independent of each other in the State of Osun\nBased on the Conclusion of L Function Test, we need to reject the null hypothesis that Non Functional Water Point in the Osun are independent of each other at all distance of d at 95% confidence interval, therefore we can conclude that Functional Water Point in the Osun area are not independent of each other."
+  },
+  {
+    "objectID": "lessons/In-class/in-class_ex6/In-class_Ex06.html",
+    "href": "lessons/In-class/in-class_ex6/In-class_Ex06.html",
+    "title": "In Class Exercise 6",
+    "section": "",
+    "text": "Important\n\n\n\nWe will be using sfdep in In-Class-Excercise instead of spded in Hands On Excercise"
+  },
+  {
+    "objectID": "lessons/In-class/in-class_ex6/In-class_Ex06.html#importing-the-geospatial-data",
+    "href": "lessons/In-class/in-class_ex6/In-class_Ex06.html#importing-the-geospatial-data",
+    "title": "In Class Exercise 6",
+    "section": "2.1 Importing the Geospatial data",
+    "text": "2.1 Importing the Geospatial data"
   }
 ]

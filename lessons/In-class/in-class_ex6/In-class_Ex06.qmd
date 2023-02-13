@@ -1,0 +1,29 @@
+---
+title: "In Class Exercise 6"
+author: "Hao Xian"
+date: "13 February 2023"
+date-modified: '`r Sys.Date()`'
+format: html
+number-sections: true
+execute: 
+  echo: true
+  eval: true
+  message: false
+  warning: false
+  
+editor: visual
+---
+
+::: callout-important
+We will be using sfdep in In-Class-Excercise instead of spded in Hands On Excercise
+:::
+
+# Loading the packages
+
+```{r}
+pacman::p_load(sf, tmap, sfdep, tidyverse)
+```
+
+# The data
+
+## Importing the Geospatial data
