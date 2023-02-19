@@ -1,0 +1,27 @@
+---
+title: "Take Home Exercise 2"
+author: "Hao Xian"
+date: "16 February 2023"
+date-modified: '`r Sys.Date()`'
+execute: 
+  echo: true
+  eval: true
+  warning: true
+  message: false
+
+editor: visual
+---
+
+# Objective
+
+::: callout-important
+This part is taken from [IS415 Take Home Exercise 2](https://is415-ay2022-23t2.netlify.app/th_ex2.html). All rights belong to Dr Kam Tin Seong.
+:::
+
+Since late December 2019, an outbreak of a novel coronavirus disease (COVID-19; previously known as 2019-nCoV) was reported in Wuhan, China, which had subsequently affected 210 countries worldwide. In general, COVID-19 is an acute resolved disease but it can also be deadly, with a 2% case fatality rate.
+
+The COVID-19 vaccination in Indonesia is an ongoing mass immunisation in response to the COVID-19 pandemic in Indonesia. On 13 January 2021, the program commenced when President Joko Widodo was vaccinated at the presidential palace. In terms of total doses given, Indonesia ranks third in Asia and fifth in the world.
+
+According to wikipedia, as of 5 February 2023 at 18:00 WIB (UTC+7), 204,266,655 people had received the first dose of the vaccine and 175,131,893 people had been fully vaccinated; 69,597,474 of them had been inoculated with the booster or the third dose, while 1,585,164 had received the fourth dose. Jakarta has the highest percentage of population fully vaccinated with 103.46%, followed by Bali and Special Region of Yogyakarta with 85.45% and 83.02% respectively.
+
+Despite its compactness, the cumulative vaccination rate are not evenly distributed within DKI Jakarta. The question is where are the sub-districts with relatively higher number of vaccination rate and how they changed over time.

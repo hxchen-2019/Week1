@@ -37,6 +37,8 @@ website:
             menu: 
             - text: "Take Home Exercise 1"
               href: "lessons/Take-home/Take-home_ex1/Take-home_ex1.html"
+            - text: "Take Home Exercise 2"
+              href: "lessons/Take-home/Take-home_ex2/Take-home_ex2.html"
 
 format:
   html:
