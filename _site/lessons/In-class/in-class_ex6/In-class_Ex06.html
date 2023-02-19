@@ -177,6 +177,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../../lessons/Hands-on/Hands-on-Ex6/Hands-on-Ex6.html">
  <span class="dropdown-text">Hands-on exercise 6</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../../lessons/Hands-on/Hands-on-Ex7/Hands-on-Ex7.html">
+ <span class="dropdown-text">Hands-on exercise 7</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -679,7 +683,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><a href="https://sfdep.josiahparry.com/reference/st_nb_dists.html"><code>st_nb_dists()</code></a> of sfdep is used to calculate the nearest neighbour distance. The output is a list of distances for each observation's neighbors list.</p></li>
+<li><p><a href="https://sfdep.josiahparry.com/reference/st_nb_dists.html"><code>st_nb_dists()</code></a> of sfdep is used to calculate the nearest neighbour distance. The output is a list of distances for each observation’s neighbors list.</p></li>
 <li><p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist"><code>unlist()</code></a> of Base R is then used to return the output as a vector so that the summary statistics of the nearest neighbour distances can be derived</p></li>
 </ul>
 </div>
@@ -697,7 +701,7 @@ Note
 <li><p><a href="https://sfdep.josiahparry.com/reference/st_dist_band.html"><code>st_dists_band()</code></a> of sfdep is used to identify neighbors based on a distance band (i.e.&nbsp;66km). The output is a list of neighbours (i.e.&nbsp;nb).</p></li>
 <li><p><a href="https://sfdep.josiahparry.com/reference/st_weights.html"><code>st_weights()</code></a> is then used to calculate polygon spatial weights of the nb list. Note that:</p>
 <ul>
-<li><p>the default <code>style</code> argument is set to "W" for row standardized weights, and</p></li>
+<li><p>the default <code>style</code> argument is set to “W” for row standardized weights, and</p></li>
 <li><p>the default <code>allow_zero</code> is set to TRUE, assigns zero as lagged value to zone without neighbors.</p></li>
 </ul></li>
 </ul>
@@ -716,7 +720,7 @@ Note
 <li><p><a href="https://sfdep.josiahparry.com/reference/st_knn.html"><code>st_knn()</code></a> of sfdep is used to identify neighbors based on k (i.e.&nbsp;k = 8 indicates the nearest eight neighbours). The output is a list of neighbours (i.e.&nbsp;nb).</p></li>
 <li><p><a href="https://sfdep.josiahparry.com/reference/st_weights.html"><code>st_weights()</code></a> is then used to calculate polygon spatial weights of the nb list. Note that:</p>
 <ul>
-<li><p>the default <code>style</code> argument is set to "W" for row standardized weights, and</p></li>
+<li><p>the default <code>style</code> argument is set to “W” for row standardized weights, and</p></li>
 <li><p>the default <code>allow_zero</code> is set to TRUE, assigns zero as lagged value to zone without neighbors</p></li>
 </ul></li>
 </ul>
