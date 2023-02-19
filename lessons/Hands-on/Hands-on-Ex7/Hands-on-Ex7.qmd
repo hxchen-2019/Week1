@@ -1,0 +1,218 @@
+---
+title: "Hands on Excerise 7"
+date: "19 February 2023"
+date-modified: '`r Sys.Date()`'
+format: html
+number-sections: true
+
+execute: 
+  echo: true
+  eval: true
+  message: false
+  warning: false
+  
+editor: visual
+---
+
+# Loading the package
+
+```{r}
+pacman::p_load(sf, spdep, tmap, tidyverse)
+```
+
+# Importing the Datas
+
+The steps listed here are all the same as those in the Hands-on Ex 6
+
+```{r}
+hunan <- st_read(dsn = "data/geospatial", 
+                 layer = "Hunan")
+```
+
+```{r}
+hunan2012 <- read_csv("data/aspatial/Hunan_2012.csv")
+```
+
+```{r}
+hunan <- left_join(hunan,hunan2012) %>%
+  select(1:4, 7, 15)
+```
+
+## Visualization
+
+```{r}
+equal <- tm_shape(hunan) +
+  tm_fill("GDPPC",
+          n = 5,
+          style = "equal") +
+  tm_borders(alpha = 0.5) +
+  tm_layout(main.title = "Equal interval classification")
+
+quantile <- tm_shape(hunan) +
+  tm_fill("GDPPC",
+          n = 5,
+          style = "quantile") +
+  tm_borders(alpha = 0.5) +
+  tm_layout(main.title = "Equal quantile classification")
+
+tmap_arrange(equal, 
+             quantile, 
+             asp=1, 
+             ncol=2)
+```
+
+# Global Spatial Autocorrelation
+
+## Computing Contiguity Spatial Weights
+
+We will be making use of the Queen Contiguity Weight Matrix
+
+```{r}
+wm_q <- poly2nb(hunan, 
+                queen=TRUE)
+summary(wm_q)
+```
+
+## Row Standardised weight matrix
+
+Afterwards we need to standardised the rows.
+
+```{r}
+rswm_q <- nb2listw(wm_q, 
+                   style="W", 
+                   zero.policy = TRUE)
+rswm_q
+```
+
+# Global Measure of Spatial AutoCorrelation
+
+Now that we have gotten the weight matrix of the neightbours, we can perform the Global Spatial Autocorrelation
+
+## Moran's I Test
+
+```{r}
+moran.test(hunan$GDPPC, 
+           listw=rswm_q, 
+           zero.policy = TRUE, 
+           na.action=na.omit)
+```
+
+We can assume that they are highly idependant as the p value is smaller than 0.01.
+
+### Computing Monte Carlo Morans.
+
+```{r}
+set.seed(1234)
+bperm= moran.mc(hunan$GDPPC, 
+                listw=rswm_q, 
+                nsim=999, 
+                zero.policy = TRUE, 
+                na.action=na.omit)
+bperm
+```
+
+We can assume that they are highly idependant as the p value is smaller than 0.01.
+
+### Visualizing Monte Carlo Morans I
+
+```{r}
+mean(bperm$res[1:999])
+```
+
+```{r}
+var(bperm$res[1:999])
+```
+
+```{r}
+summary(bperm$res[1:999])
+```
+
+```{r}
+hist(bperm$res, 
+     freq=TRUE, 
+     breaks=20, 
+     xlab="Simulated Moran's I")
+abline(v=0, 
+       col="red") 
+```
+
+The Morans value resemble a Normal Distribution
+
+## Geary C Test
+
+### The Geary C Test
+
+```{r}
+geary.test(hunan$GDPPC, listw=rswm_q)
+```
+
+We can assume that they are highly idependant as the p value is smaller than 0.01.
+
+### Computing Monte Carlo Geary's C
+
+```{r}
+set.seed(1234)
+bperm=geary.mc(hunan$GDPPC, 
+               listw=rswm_q, 
+               nsim=999)
+bperm
+```
+
+We can assume that they are highly idependant as the p value is smaller than 0.01.
+
+### Visualising Monte Carlo Geary's C
+
+```{r}
+mean(bperm$res[1:999])
+```
+
+```{r}
+var(bperm$res[1:999])
+```
+
+```{r}
+summary(bperm$res[1:999])
+```
+
+```{r}
+hist(bperm$res, freq=TRUE, breaks=20, xlab="Simulated Geary c")
+abline(v=1, col="red") 
+```
+
+The Geary value resemble a Normal Distribution
+
+## Spatial Correlogram
+
+### Moran's I
+
+```{r}
+MI_corr <- sp.correlogram(wm_q, 
+                          hunan$GDPPC, 
+                          order=6, 
+                          method="I", 
+                          style="W")
+plot(MI_corr)
+```
+
+The plot might not really give us the complete interpretation as such we need to see the full report;
+
+```{r}
+print(MI_corr)
+```
+
+### Geary's C
+
+```{r}
+GC_corr <- sp.correlogram(wm_q, 
+                          hunan$GDPPC, 
+                          order=6, 
+                          method="C", 
+                          style="W")
+plot(GC_corr)
+```
+
+```{r}
+print(GC_corr)
+```
+
+# Local Measure of Spatial Autocorrelation
