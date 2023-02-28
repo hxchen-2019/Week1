@@ -5,3 +5,35 @@
 .DS_Store
 
 /.quarto/
+lessons/Workshop/ProtoType/data/aspatial/respopagesextod2011to2020.csv
+lessons/Workshop/ProtoType/data/aspatial/SGPools_svy21.csv
+lessons/Workshop/ProtoType/data/Exam_data.csv
+lessons/Workshop/ProtoType/data/geospatial/MP14_SUBZONE_WEB_PL.dbf
+lessons/Workshop/ProtoType/data/geospatial/MP14_SUBZONE_WEB_PL.prj
+lessons/Workshop/ProtoType/data/geospatial/MP14_SUBZONE_WEB_PL.shp
+lessons/Workshop/ProtoType/data/geospatial/MP14_SUBZONE_WEB_PL.shp.xml
+lessons/Workshop/ProtoType/data/geospatial/MP14_SUBZONE_WEB_PL.shx
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/aspatial/respopagesextod2011to2020.csv
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/aspatial/SGPools_svy21.csv
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/Exam_data.csv
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/geospatial/MP14_SUBZONE_WEB_PL.dbf
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/geospatial/MP14_SUBZONE_WEB_PL.prj
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/geospatial/MP14_SUBZONE_WEB_PL.shp
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/geospatial/MP14_SUBZONE_WEB_PL.shp.xml
+lessons/Workshop/ProtoType_Choropleth Mapping System/data/geospatial/MP14_SUBZONE_WEB_PL.shx
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/aspatial/respopagesextod2011to2020.csv
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/aspatial/SGPools_svy21.csv
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/Exam_data.csv
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/geospatial/MP14_SUBZONE_WEB_PL.dbf
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/geospatial/MP14_SUBZONE_WEB_PL.prj
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/geospatial/MP14_SUBZONE_WEB_PL.shp
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/geospatial/MP14_SUBZONE_WEB_PL.shp.xml
+lessons/Workshop/ProtoType_ProportionalSymbolMap/data/geospatial/MP14_SUBZONE_WEB_PL.shx
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/geospatial/MP14_SUBZONE_WEB_PL.dbf
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/geospatial/MP14_SUBZONE_WEB_PL.prj
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/geospatial/MP14_SUBZONE_WEB_PL.shp
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/geospatial/MP14_SUBZONE_WEB_PL.shp.xml
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/geospatial/MP14_SUBZONE_WEB_PL.shx
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/Exam_data.csv
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/aspatial/SGPools_svy21.csv
+lessons/Workshop/ProtoType_ProportionalSymbolMap_Reactive/data/aspatial/respopagesextod2011to2020.csv

@@ -295,11 +295,10 @@ pacman::p_load(sf, sfdep, tmap, plotly, tidyverse, zoo, Kendall)
 
 ```{r}
 GDPPC <- read_csv("data/aspatial/Hunan_GDPPC.csv")
-hunan <- read_csv("data/aspatial/Hunan_2012.csv")
 ```
 
 ```{r}
-GDPPC_st <- spacetime(GDPPC,hunan,
+GDPPC_st <- spacetime(GDPPC, hunan,
                       .loc_col = "County",
                       .time_col = "Year")
 ```
