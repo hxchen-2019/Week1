@@ -1,0 +1,207 @@
+---
+title: "In Class Exercise 8"
+author: "Hao Xian"
+date: "6 March 2023"
+date-modified: '`r Sys.Date()`'
+format: html
+number-sections: true
+execute: 
+  echo: true
+  eval: true
+  message: false
+  warning: false
+  
+editor: visual
+---
+
+::: callout-important
+We will be using sfdep in In-Class-Excercise instead of spded in Hands On Excercise
+:::
+
+# Loading the packages
+
+::: callout-note
+Remove Corrplot, as there might be some conflicts
+:::
+
+```{r}
+
+pacman::p_load(olsrr, sf, spdep, GWmodel, tmap, gtsummary, ggplot)
+```
+
+# The data
+
+## Importing the Geospatial data
+
+::: callout-note
+This file is loaded as a sf dataframe
+:::
+
+```{r}
+mpsz = st_read(dsn = "data/geospatial", layer = "MP14_SUBZONE_WEB_PL")
+```
+
+```{r}
+mpsz_svy21 <- st_transform(mpsz, 3414)
+```
+
+## Update the CRS Model
+
+```{r}
+st_crs(mpsz_svy21)
+```
+
+```{r}
+st_bbox(mpsz) #view extent
+```
+
+## Reading the Aspatial Data
+
+```{r}
+condo_resale = readr::read_csv("data/aspatial/Condo_resale_2015.csv")
+```
+
+```{r}
+dplyr::glimpse(condo_resale)
+```
+
+```{r}
+summary(condo_resale)
+```
+
+### Converting aspatial dataframe into a sf object
+
+```{r}
+condo_resale.sf <- st_as_sf(condo_resale,
+                            coords = c("LONGITUDE", "LATITUDE"),
+                            crs=4326) %>%
+  st_transform(crs=3414)
+```
+
+# EDA
+
+```{r}
+## Need to fix
+##ggplot::ggplot(data=condo_resale.sf, aes(x=`SELLING_PRICE`)) +
+##  geom_histogram(bins=20, color="black", fill="light blue")
+```
+
+Since the data is skewed we should normalize it by logging it
+
+```{r}
+condo_resale.sf <- condo_resale.sf %>%
+  mutate(`LOG_SELLING_PRICE` = log(SELLING_PRICE))
+```
+
+```{r}
+## need to fix
+##ggplot::ggplot(data=condo_resale.sf, aes(x=`LOG_SELLING_PRICE`)) +
+##  geom_histogram(bins=20, color="black", fill="light blue")
+```
+
+The distribution is now less skewed
+
+## Multiple Histogram Plots
+
+```{r}
+
+## Need to fix all of t
+
+
+```
+
+### Drawing Statistical Point Map
+
+```{r}
+tmap_mode("view")
+```
+
+```{r}
+tm_shape(mpsz_svy21)+
+  tm_polygons() +
+tm_shape(condo_resale.sf) +  
+  tmap_options(check.and.fix = TRUE)+
+  tm_dots(
+          col = "SELLING_PRICE",
+          alpha = 0.6,
+          style="quantile") +
+  tm_view(set.zoom.limits = c(11,14))
+```
+
+```{r}
+tmap_mode("plot")
+```
+
+# Building Hedonic Price Model
+
+## Simple Linear Regression
+
+```{r}
+condo.slr <- lm(formula=SELLING_PRICE ~ AREA_SQM, data = condo_resale.sf)
+```
+
+We will plot it to see
+
+```{r}
+## Need to fix thios
+
+```
+
+## Multiple Linear Regression
+
+We need to check the correlation first
+
+```{r}
+corrplot::corrplot(cor(condo_resale[, 5:23]), diag = FALSE, order = "AOE",
+         tl.pos = "td", tl.cex = 0.5, method = "number", type = "upper")
+```
+
+## Building a hedonic pricing model using multiple linear regression method
+
+```{r}
+condo.mlr <- lm(formula = SELLING_PRICE ~ AREA_SQM + AGE    + 
+                  PROX_CBD + PROX_CHILDCARE + PROX_ELDERLYCARE +
+                  PROX_URA_GROWTH_AREA + PROX_HAWKER_MARKET + PROX_KINDERGARTEN + 
+                  PROX_MRT  + PROX_PARK + PROX_PRIMARY_SCH + 
+                  PROX_TOP_PRIMARY_SCH + PROX_SHOPPING_MALL + PROX_SUPERMARKET + 
+                  PROX_BUS_STOP + NO_Of_UNITS + FAMILY_FRIENDLY + FREEHOLD, 
+                data=condo_resale.sf)
+summary(condo.mlr)
+```
+
+### Preparing Publication Quality Table
+
+```{r}
+condo.mlr1 <- lm(formula = SELLING_PRICE ~ AREA_SQM + AGE + 
+                   PROX_CBD + PROX_CHILDCARE + PROX_ELDERLYCARE +
+                   PROX_URA_GROWTH_AREA + PROX_MRT  + PROX_PARK + 
+                   PROX_PRIMARY_SCH + PROX_SHOPPING_MALL    + PROX_BUS_STOP + 
+                   NO_Of_UNITS + FAMILY_FRIENDLY + FREEHOLD,
+                 data=condo_resale.sf)
+ols_regress(condo.mlr1)
+```
+
+### Preparing using GT SUmamry
+
+```{r}
+tbl_regression(condo.mlr1, intercept = TRUE)
+
+```
+
+### Regression
+
+```{r}
+tbl_regression(condo.mlr1, 
+               intercept = TRUE) %>% 
+  add_glance_source_note(
+    label = list(sigma ~ "\U03C3"),
+    include = c(r.squared, adj.r.squared, 
+                AIC, statistic,
+                p.value, sigma))
+```
+
+### CHecking for multicolinearity
+
+```{r}
+ols_vif_tol(condo.mlr1)
+```
