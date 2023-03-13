@@ -81,3 +81,9 @@ lessons/In-class/in-class_ex9/data/geospatial/MPSZ-2019.prj
 lessons/In-class/in-class_ex9/data/geospatial/MPSZ-2019.qmd
 lessons/In-class/in-class_ex9/data/geospatial/MPSZ-2019.shp
 lessons/In-class/in-class_ex9/data/geospatial/MPSZ-2019.shx
+lessons/In-class/in-class_ex9/data/model/coords_test.rds
+lessons/In-class/in-class_ex9/data/model/coords_train.rds
+lessons/In-class/in-class_ex9/data/model/gwRF_adaptive.rds
+lessons/In-class/in-class_ex9/data/model/price_mlr.rds
+lessons/In-class/in-class_ex9/data/model/test_data.rds
+lessons/In-class/in-class_ex9/data/model/train_data.rds
