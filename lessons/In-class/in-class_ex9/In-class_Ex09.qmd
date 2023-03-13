@@ -1,0 +1,17 @@
+---
+title: "In Class Exercise 9"
+author: "Hao Xian"
+date: "13 March 2023"
+date-modified: '`r Sys.Date()`'
+format: html
+number-sections: true
+execute: 
+  echo: true
+  eval: true
+  message: false
+  warning: false
+  
+editor: visual
+---
+
+# Loading the packages
