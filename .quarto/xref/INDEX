@@ -79,5 +79,17 @@
   },
   "lessons/In-class/in-class_ex9/data/geospatial/MPSZ-2019.qmd": {
     "MPSZ-2019.html": "d4e1dbf7"
+  },
+  "lessons/Take-home/Take-home_ex3/data/geospatial/boundaries/MPSZ-2019.qmd": {
+    "MPSZ-2019.html": "bb0bc433"
+  },
+  "lessons/Hands-on/Hands-on-Ex10/Hands-on-Ex10.qmd": {
+    "Hands-on-Ex10.html": "a26e1db9"
+  },
+  "lessons/Hands-on/Hands-on-Ex10/data/geospatial/ELDERCARE.qmd": {
+    "ELDERCARE.html": "7d9beef7"
+  },
+  "lessons/Hands-on/Hands-on-Ex10/data/geospatial/hexagons.qmd": {
+    "hexagons.html": "47e1ed7c"
   }
 }

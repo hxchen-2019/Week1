@@ -7,7 +7,7 @@ format: html
 number-sections: true
 execute: 
   echo: true
-  eval: true
+  eval: false
   message: false
   warning: false
   
@@ -113,6 +113,7 @@ coords_test <- st_coordinates(test_data)
 ```
 
 ```{r}
+#| eval: false
 coords_train <- write_rds(coords_train, "data/model/coords_train.rds")
 coords_test <- write_rds(coords_test, "data/model/coords_test.rds")
 ```
@@ -120,6 +121,7 @@ coords_test <- write_rds(coords_test, "data/model/coords_test.rds")
 ## Dropping Geometry Field
 
 ```{r}
+#| eval: false
 train_data <- train_data %>%
   st_drop_geometry()
 ```
@@ -147,94 +149,14 @@ print(rf)
 For performance, Look at MSE as the main source Error. We will need to square-root the MSE.
 :::
 
-# Calibrating Geographically weighted Random Forest
-
-::: callout-note
-We need to look at the grd documentation.
-:::
+# Calibrating Geographically weighted Random Fores
 
 ```{r}
 #| eval: false
 set.seed(1234)
-gwRD_adaptive <- grf(formula = resale_price ~ floor_area_sqm + storey_order + remaining_lease_mths + PROX_CBD + PROX_ELDERLYCARE + PROX_HAWKER + PROX_MRT + PROX_PARK + PROX_MALL + PROX_SUPERMARKET + WITHIN_350M_KINDERGARTEN + WITHIN_350M_CHILDCARE + WITHIN_350M_BUS + WITHIN_1KM_PRISCH,
+gwRD_adaptive <- grf(resale_price ~ floor_area_sqm + storey_order + remaining_lease_mths + PROX_CBD + PROX_ELDERLYCARE + PROX_HAWKER + PROX_MRT + PROX_PARK + PROX_MALL + PROX_SUPERMARKET + WITHIN_350M_KINDERGARTEN + WITHIN_350M_CHILDCARE + WITHIN_350M_BUS + WITHIN_1KM_PRISCH,
 dframe = train_data,
 bw=55,
 kernel = "adaptive",
 coords = coords_train)
 ```
-
-::: callout-note
-How do we determine the Bandwidth, we can borrow the bandwidth. The better methods is to calculate with grf.bw().
-:::
-
-There are 2 parts to the result, the first section is for explanatory model. the second section is for predictor model. We are looking at AIC model to compare.
-
-## Saving the Model
-
-```{r}
-#| eval: false
-write_rds(gwRD_adaptive, "data/model/gwRF_adaptive.rds")
-```
-
-## Read the model
-
-```{r}
-#| eval: false
-gwRF_adaptive <- read_rds("data/model/gwRF_adaptive.rds")
-```
-
-We can view the information and load it into a data frame so that we can report it.
-
-```{r}
-#| eval: false
-vi_df <- as.data.frame(gwRF_adaptive$Global.Model$variable.importance)
-vi_df
-```
-
-## Predicting the using the test data
-
-We will combine the test data with its corresponding coordinates data
-
-```{r}
-#| eval: false
-test_data <- cbind(test_data, coords_test) %>%
-  st_drop_geometry()
-```
-
-### Predicting with test data
-
-```{r}
-#| eval: false
-gwRF_ored <- predict.grf(gwRF_adaptive, 
-                         test_data,
-                         x.var.name="X",
-                         y.var.name="Y",
-                         local.w=1,
-                         global.w=0)
-```
-
-```{r}
-#| eval: false
-write_rds(gwRF_ored, "data/model/gwRF_pred.rds")
-
-```
-
-### Converting to the predicting output into a data frame.
-
-```{r}
-#| eval: false
-gwRF_pred <- read_rds("data/model/gwRF_pred.rds")
-```
-
-```{r}
-#| eval: false
-gwRF_pred_df <- as.data.frame(gwRF_pred)
-```
-
-```{r}
-
-```
-
-::: callout-note
-We would need to plot it out to see the outliers..
-:::
