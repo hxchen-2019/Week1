@@ -194,7 +194,7 @@ hexagon_Hansen <- st_join(hexagon_Hansen, mpsz,
 
 ```{r}
 ggplot(data=hexagon_Hansen, 
-       aes(y = log(accHansen), 
+       aes(y = log(accHansen), ## we need to log,m otherwise we will not see anythong
            x= REGION_N)) +
   geom_boxplot() +
   geom_point(stat="summary", 
