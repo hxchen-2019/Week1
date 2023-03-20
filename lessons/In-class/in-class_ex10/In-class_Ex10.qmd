@@ -18,9 +18,13 @@ editor: visual
 
 ```{r}
 pacman::p_load(tmap, SpatialAcc, sf, 
-               ggstatsplot, reshape2,
+               ggstatsplot, reshape2, fca,
                tidyverse)
 ```
+
+::: callout-note
+For fca, there are some changes, in which it is opposite of the package use.
+:::
 
 ## Reading the Data
 
@@ -51,17 +55,20 @@ We can once again verify the values as well.
 st_crs(mpsz)
 ```
 
-### Cleaning the Redunctant Dataa
+### Cleaning the Redunctant Data
 
 There a number of reduntant data from the eldercare dataset and hexagons data set.
 
 ```{r}
 eldercare <- eldercare %>%
   select(fid, ADDRESSPOS) %>%
+  rename(destination_id = fid,
+         postal_code = ADDRESSPOS) %>%
   mutate(capacity = 100)
 
 hexagons <- hexagons %>%
   select(fid) %>%
+  rename(origin_id = fid) %>%
   mutate(demand = 100)
 ```
 
@@ -90,6 +97,25 @@ we will need to convert it to kilometer
 distmat_km <- as.matrix(distmat/1000)
 ```
 
+## Computing Distance Matrix (Optional)
+
+```{r}
+eldercare_coord <- st_coordinates(eldercare)
+hexagon_coord <- st_coordinates(hexagons)
+```
+
+There are many functions with the name distance, so we specify that it is from the Spatial Acc package
+
+```{r}
+EucMatrix <- SpatialAcc::distance(hexagon_coord,
+                                  eldercare_coord,
+                                  type = 'euclidean')
+```
+
+```{r}
+EucMatrix_km <- as.matrix(EucMatrix/1000)
+```
+
 ## Modeling and Visualizing Accessibility (Hansen)
 
 ### Computing Hansen's Asscessibility
@@ -116,7 +142,7 @@ colnames(acc_Hansen) <- "accHansen"
 We will then convert the acc_Hansen to a tibble dataframe before merging it with the Hexagon data.
 
 ```{r}
-acc_Hansen <- tbl_df(acc_Hansen)
+acc_Hansen <- as_tibble(acc_Hansen)
 hexagon_Hansen <- bind_cols(hexagons, acc_Hansen)
 ```
 
@@ -131,6 +157,10 @@ mapex <- st_bbox(hexagons)
 We can use the data to form a high quality map as well.
 
 ```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+
 tmap_mode("plot")
 tm_shape(hexagon_Hansen,
          bbox = mapex) + 
@@ -188,7 +218,7 @@ acc_KD2SFCA <- data.frame(ac(hexagons$demand,
                             family = "KD2SFCA"))
 
 colnames(acc_KD2SFCA) <- "accKD2SFCA"
-acc_KD2SFCA <- tbl_df(acc_KD2SFCA)
+acc_KD2SFCA <- as_tibble(acc_KD2SFCA)
 hexagon_KD2SFCA <- bind_cols(hexagons, acc_KD2SFCA)
 ```
 
@@ -252,7 +282,7 @@ acc_SAM <- data.frame(ac(hexagons$demand,
                          family = "SAM"))
 
 colnames(acc_SAM) <- "accSAM"
-acc_SAM <- tbl_df(acc_SAM)
+acc_SAM <- as_tibble(acc_SAM)
 hexagon_SAM <- bind_cols(hexagons, acc_SAM)
 ```
 
