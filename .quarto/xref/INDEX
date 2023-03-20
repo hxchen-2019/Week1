@@ -91,5 +91,14 @@
   },
   "lessons/Hands-on/Hands-on-Ex10/data/geospatial/hexagons.qmd": {
     "hexagons.html": "47e1ed7c"
+  },
+  "lessons/In-class/in-class_ex10/In-class_Ex10.qmd": {
+    "In-class_Ex10.html": "194cae4a"
+  },
+  "lessons/In-class/in-class_ex10/data/geospatial/ELDERCARE.qmd": {
+    "ELDERCARE.html": "9c452394"
+  },
+  "lessons/In-class/in-class_ex10/data/geospatial/hexagons.qmd": {
+    "hexagons.html": "aa14a405"
   }
 }
