@@ -258,7 +258,7 @@ hexagon_KD2SFCA <- st_join(hexagon_KD2SFCA, mpsz,
                           join = st_intersects)
 
 ggplot(data=hexagon_KD2SFCA, 
-       aes(y = accKD2SFCA, 
+       aes(y = log(accKD2SFCA), 
            x= REGION_N)) +
   geom_boxplot() +
   geom_point(stat="summary", 
@@ -322,7 +322,7 @@ hexagon_SAM <- st_join(hexagon_SAM, mpsz,
                        join = st_intersects)
 
 ggplot(data=hexagon_SAM, 
-       aes(y = accSAM, 
+       aes(y = log(accSAM), 
            x= REGION_N)) +
   geom_boxplot() +
   geom_point(stat="summary", 
