@@ -100,5 +100,11 @@
   },
   "lessons/In-class/in-class_ex10/data/geospatial/hexagons.qmd": {
     "hexagons.html": "aa14a405"
+  },
+  "lessons/In-class/in-class_ex11/In-class_Ex11.qmd": {
+    "In-class_Ex11.html": "57afdec5"
+  },
+  "lessons/In-class/in-class_ex11/data/geospatial/MPSZ-2019.qmd": {
+    "MPSZ-2019.html": "313acdf1"
   }
 }
