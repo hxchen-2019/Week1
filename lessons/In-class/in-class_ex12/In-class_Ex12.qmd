@@ -134,12 +134,10 @@ CalcRSquared <- function(observed,estimated){
 
 We can compute with the following message
 
-```{r}
-CalcRSquared(uncSIM$data$TRIPS, uncSIM$fitted.values)
-```
+This is a relatively poor method
 
 ```{r}
-r2_mcfadden(uncSIM)
+CalcRSquared(uncSIM$data$TRIPS, uncSIM$fitted.values)
 ```
 
 # **Origin (Production) constrained SIM**
@@ -162,16 +160,6 @@ summary(orcSIM)
 ```
 
 ## R-Squared Function
-
-In order to measure how much variation of the trips can be accounted by the model we will write a function to calculate R-Squared value as shown below.
-
-```{r}
-CalcRSquared <- function(observed,estimated){
-  r <- cor(observed,estimated)
-  R2 <- r^2
-  R2
-}
-```
 
 Next, we will compute the R-squared of the unconstrained SIM by using the code chunk below.
 

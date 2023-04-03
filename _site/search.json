@@ -1684,14 +1684,14 @@
     "href": "lessons/In-class/in-class_ex12/In-class_Ex12.html#r-squared-function",
     "title": "In class Exercise 12",
     "section": "3.1 R-Squared function",
-    "text": "3.1 R-Squared function\nIn order to measure how much variation of the trips can be accounted by the model we will write a function to calculate R-Squared value as shown below.\n\nCalcRSquared <- function(observed,estimated){\n  r <- cor(observed,estimated)\n  R2 <- r^2\n  R2\n}\n\nWe can compute with the following message\n\nCalcRSquared(uncSIM$data$TRIPS, uncSIM$fitted.values)\n\n[1] 0.1694734\n\n\n\nr2_mcfadden(uncSIM)\n\n# R2 for Generalized Linear Regression\n       R2: 0.446\n  adj. R2: 0.446"
+    "text": "3.1 R-Squared function\nIn order to measure how much variation of the trips can be accounted by the model we will write a function to calculate R-Squared value as shown below.\n\nCalcRSquared <- function(observed,estimated){\n  r <- cor(observed,estimated)\n  R2 <- r^2\n  R2\n}\n\nWe can compute with the following message\nThis is a relatively poor method\n\nCalcRSquared(uncSIM$data$TRIPS, uncSIM$fitted.values)\n\n[1] 0.1694734"
   },
   {
     "objectID": "lessons/In-class/in-class_ex12/In-class_Ex12.html#r-squared-function-1",
     "href": "lessons/In-class/in-class_ex12/In-class_Ex12.html#r-squared-function-1",
     "title": "In class Exercise 12",
     "section": "4.1 R-Squared Function",
-    "text": "4.1 R-Squared Function\nIn order to measure how much variation of the trips can be accounted by the model we will write a function to calculate R-Squared value as shown below.\n\nCalcRSquared <- function(observed,estimated){\n  r <- cor(observed,estimated)\n  R2 <- r^2\n  R2\n}\n\nNext, we will compute the R-squared of the unconstrained SIM by using the code chunk below.\n\nCalcRSquared(orcSIM$data$TRIPS, orcSIM$fitted.values)\n\n[1] 0.4029115"
+    "text": "4.1 R-Squared Function\nNext, we will compute the R-squared of the unconstrained SIM by using the code chunk below.\n\nCalcRSquared(orcSIM$data$TRIPS, orcSIM$fitted.values)\n\n[1] 0.4029115"
   },
   {
     "objectID": "lessons/In-class/in-class_ex12/In-class_Ex12.html#r-squared-function-2",
