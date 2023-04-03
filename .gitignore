@@ -89,3 +89,7 @@ lessons/In-class/in-class_ex9/data/model/test_data.rds
 lessons/In-class/in-class_ex9/data/model/train_data.rds
 lessons/Take-home/Take-home_ex3/data/
 lessons/In-class/in-class_ex11/data/
+lessons/In-class/in-class_ex12/data/rds/distPair.rds
+lessons/In-class/in-class_ex12/data/rds/od_data.rds
+lessons/In-class/in-class_ex12/data/rds/odbus7_9.rds
+lessons/In-class/in-class_ex12/data/rds/SIM_data.rds
